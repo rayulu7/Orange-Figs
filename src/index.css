@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Primary Brand Colours - The Orange Figs Palette */
+        --brand-orange: #F97316;
+        --brand-orange-light: #FDBA74;
+        --brand-orange-dark: #EA580C;
+        --brand-amber: #F59E0B;
+        --brand-gold: #D97706;
+        --brand-warm-black: #1A120B;
+        --brand-cream: #FFF7ED;
+
+        --background: 30 20% 99%;
+        --foreground: 20 20% 10%;
+        --card: 0 0% 100%;
+        --card-foreground: 20 20% 10%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 20 20% 10%;
+
+        /* Theme Mapping */
+        --primary: 25 95% 53%;
+        /* #F97316 - vibrant orange */
+        --primary-foreground: 0 0% 100%;
+
+        --secondary: 21 90% 48%;
+        /* #EA580C - burnt orange */
+        --secondary-foreground: 0 0% 100%;
+
+        --magenta: 38 92% 50%;
+        /* #F59E0B - amber gold (replaces magenta) */
+        --magenta-foreground: 0 0% 100%;
+
+        --accent: 33 100% 96%;
+        /* Very light orange tint */
+        --accent-foreground: 20 90% 30%;
+
+        --muted: 30 10% 96%;
+        --muted-foreground: 20 10% 45%;
+
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
+
+        --border: 30 15% 90%;
+        --input: 30 15% 90%;
+        --ring: 25 95% 53%;
+
+        --radius: 1.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border selection:bg-brand-orange/20 selection:text-brand-orange;
+    }
+
+    html {
+        scroll-behavior: smooth;
+        scrollbar-width: none;
+        /* Firefox */
+        -ms-overflow-style: none;
+        /* IE/Edge */
+    }
+
+    html::-webkit-scrollbar {
+        display: none;
+        /* Chrome, Safari, Opera */
+    }
+
+    body {
+        @apply bg-background text-foreground;
+        font-family: 'Montserrat', sans-serif;
+        /* Proxy for Andes */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+    }
+}
+
+/* Custom Scrollbar disabled */
+
+/* Gradient Text using Brand Colors */
+.gradient-text {
+    @apply bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient;
+    background-image: linear-gradient(to right, #F97316, #F59E0B, #EA580C, #F97316);
+}
+
+.gradient-text-light {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-white via-white/80 to-white bg-[length:200%_auto] animate-gradient;
+}
+
+/* Orange glow effects */
+.orange-glow {
+    box-shadow: 0 0 40px rgba(249, 115, 22, 0.3), 0 0 80px rgba(249, 115, 22, 0.1);
+}
+
+.orange-glow-sm {
+    box-shadow: 0 4px 20px rgba(249, 115, 22, 0.25);
+}
+
+.orange-glow-lg {
+    box-shadow: 0 0 60px rgba(249, 115, 22, 0.4), 0 0 120px rgba(249, 115, 22, 0.15);
+}
+
+/* Shimmer animation */
+@keyframes shimmer {
+    0% {
+        background-position: -200% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
+}
+
+.animate-shimmer {
+    background-size: 200% auto;
+    animation: shimmer 3s linear infinite;
+}
+
+/* Section Padding */
+.section-padding {
+    @apply py-14 lg:py-20;
+}
+
+/* Container */
+.container-custom {
+    @apply max-w-7xl mx-auto px-6 lg:px-12;
+}
+
+/* Backgrounds */
+.bg-cream {
+    background-color: #FAFAFA;
+}
+
+/* Animations */
+@keyframes gradient {
+    0% {
+        background-position: 0% center;
+    }
+
+    50% {
+        background-position: 100% center;
+    }
+
+    100% {
+        background-position: 0% center;
+    }
+}
+
+.animate-gradient {
+    animation: gradient 6s ease infinite;
+}
+
+/* Glassmorphism */
+.glass-header {
+    @apply bg-white/80 backdrop-blur-lg;
+}
+
+.glass-card {
+    @apply bg-white/40 backdrop-blur-xl border border-white/20;
+}
+
+/* Shadows */
+.shadow-premium {
+    box-shadow: 0 25px 80px -20px rgba(0, 0, 0, 0.08);
+}
+
+/* Layout Utilities */
+.perspective-2000 {
+    perspective: 2000px;
+}
+
+.nav-link {
+    @apply relative text-gray-900 transition-colors duration-300;
+}
+
+.nav-link::after {
+    content: '';
+    @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+}
+
+.nav-link:hover::after {
+    @apply w-full;
+}
+
+.nav-link:hover {
+    @apply text-primary;
+}
+
+@keyframes bounce-slow {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.animate-bounce-slow {
+    animation: bounce-slow 4s ease-in-out infinite;
+}
+
+.animate-bounce-slow-delay {
+    animation: bounce-slow 4s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(0deg);
+    }
+
+    33% {
+        transform: translateY(-10px) rotate(2deg);
+    }
+
+    66% {
+        transform: translateY(5px) rotate(-1deg);
+    }
+}
+
+.animate-float {
+    animation: float 6s ease-in-out infinite;
+}
