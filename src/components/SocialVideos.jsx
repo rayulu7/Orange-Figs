@@ -38,11 +38,12 @@ const SocialCard = ({ post, index }) => {
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
-    const mouseXSpring = useSpring(x);
-    const mouseYSpring = useSpring(y);
+    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
+    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"]);
+    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["12deg", "-12deg"]);
+    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-12deg", "12deg"]);
+    const shadowOpacity = useTransform(mouseYSpring, [-0.5, 0.5], [0.3, 0.1]);
 
     const handleMouseMove = (e) => {
         const rect = cardRef.current.getBoundingClientRect();
@@ -74,46 +75,50 @@ const SocialCard = ({ post, index }) => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.1 * index }}
-            className="group relative aspect-[9/16] rounded-[2.5rem] overflow-hidden shadow-xl bg-gray-100 cursor-pointer hover:shadow-[0_40px_80px_rgba(249,115,22,0.25)] transition-shadow duration-500"
+            transition={{ delay: 0.1 * index, duration: 0.8 }}
+            className="group relative aspect-[9/16] rounded-[3rem] overflow-hidden bg-gray-100 cursor-pointer shadow-premium hover:shadow-xl transition-shadow duration-700"
         >
             <div className="absolute inset-0 z-0 h-full w-full">
                 <img
                     src={post.thumbnail}
                     alt="Social post"
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                 />
             </div>
 
             {/* Content Overlay with 3D Pop */}
             <div
                 className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6"
-                style={{ transform: "translateZ(50px)" }}
+                style={{ transform: "translateZ(60px)" }}
             >
-                <div className="absolute inset-0 bg-gradient-to-t from-orange-950/80 via-orange-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-orange-950/90 via-orange-900/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                <div className="relative z-20 flex flex-col items-center gap-4 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-8 group-hover:translate-y-0">
+                <div className="relative z-20 flex flex-col items-center gap-6 opacity-0 group-hover:opacity-100 transition-all duration-700 translate-y-12 group-hover:translate-y-0">
                     <motion.div
-                        animate={{ scale: [1, 1.1, 1] }}
-                        transition={{ repeat: Infinity, duration: 2 }}
-                        className="w-16 h-16 rounded-full bg-orange-500/90 backdrop-blur-md flex items-center justify-center text-white shadow-2xl shadow-orange-500/40"
+                        animate={{ scale: [1, 1.15, 1] }}
+                        transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
+                        className="w-20 h-20 rounded-full bg-white/20 backdrop-blur-xl border border-white/30 flex items-center justify-center text-white shadow-2xl"
                     >
                         <Play fill="white" size={32} className="ml-1" />
                     </motion.div>
 
-                    <div className="flex gap-6 text-white text-lg font-black tracking-tight">
-                        <span className="flex items-center gap-2 drop-shadow-lg"><Heart size={20} className="fill-white" /> {post.likes}</span>
-                        <span className="flex items-center gap-2 drop-shadow-lg"><MessageCircle size={20} className="fill-white" /> {post.comments}</span>
+                    <div className="flex gap-8 text-white text-xl font-black tracking-tighter">
+                        <span className="flex items-center gap-2 drop-shadow-2xl">
+                            <Heart size={20} className="fill-white" /> {post.likes}
+                        </span>
+                        <span className="flex items-center gap-2 drop-shadow-2xl">
+                            <MessageCircle size={20} className="fill-white" /> {post.comments}
+                        </span>
                     </div>
                 </div>
             </div>
 
             {/* Social Icon Corner */}
             <div
-                className="absolute top-6 right-6 w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white z-20 shadow-xl"
-                style={{ transform: "translateZ(30px)" }}
+                className="absolute top-8 right-8 w-14 h-14 rounded-[1.25rem] bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center text-white z-20 shadow-2xl group-hover:bg-orange-500 group-hover:border-orange-400 transition-all duration-500"
+                style={{ transform: "translateZ(40px)" }}
             >
-                <Instagram size={24} />
+                <Instagram size={28} />
             </div>
         </motion.div>
     );
@@ -121,38 +126,41 @@ const SocialCard = ({ post, index }) => {
 
 export const SocialVideos = () => {
     return (
-        <section className="py-14 lg:py-20 bg-white overflow-hidden">
+        <section className="pt-0 pb-24 bg-white overflow-hidden relative">
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-orange-50/50 rounded-full blur-[120px] pointer-events-none" />
+
             <div className="container-custom">
                 {/* Header */}
-                <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
+                <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         whileInView={{ opacity: 1, scale: 1 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-600 font-bold text-xs uppercase tracking-[0.2em] mb-2"
+                        className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full border border-orange-100 bg-orange-50/50 text-orange-600 font-black text-[10px] uppercase tracking-[0.3em] mb-2 shadow-sm"
                     >
-                        <Instagram size={16} />
-                        Social Feed
+                        <Instagram size={18} />
+                        Live from the Kitchen
                     </motion.div>
                     <motion.h2
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
-                        className="text-4xl lg:text-6xl font-black text-gray-900 tracking-tight"
+                        className="text-5xl lg:text-7xl font-black text-gray-900 tracking-tighter leading-[0.9]"
                     >
                         Kitchen in <span className="gradient-text">Motion.</span>
                     </motion.h2>
                     <motion.div
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
-                        className="pt-2"
+                        transition={{ delay: 0.2 }}
+                        className="pt-6"
                     >
                         <a
                             href="https://www.instagram.com/orangefigs"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="bg-gray-900 text-white px-8 py-3 rounded-2xl font-black text-sm uppercase tracking-widest hover:bg-orange-600 transition-all shadow-xl shadow-gray-200 hover:shadow-orange-200 flex items-center gap-3 w-fit mx-auto group"
+                            className="bg-gray-900 text-white px-10 py-4 rounded-[1.5rem] font-black text-[13px] uppercase tracking-widest hover:bg-orange-600 transition-all shadow-premium hover:shadow-orange-200 flex items-center gap-4 w-fit mx-auto group"
                         >
                             Follow @orangefigs
-                            <Instagram size={18} className="group-hover:rotate-12 transition-transform" />
+                            <Instagram size={20} className="group-hover:rotate-12 transition-transform" />
                         </a>
                     </motion.div>
                 </div>

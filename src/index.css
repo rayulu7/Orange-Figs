@@ -49,6 +49,12 @@
         --input: 30 15% 90%;
         --ring: 25 95% 53%;
 
+        /* HSL Shadow System - Medium Depth */
+        --shadow-sm: 0 2px 4px 0 hsl(20 30% 10% / 0.05);
+        --shadow-md: 0 10px 30px -5px hsl(20 30% 10% / 0.08), 0 5px 15px -3px hsl(20 30% 10% / 0.05);
+        --shadow-lg: 0 25px 60px -12px hsl(20 30% 10% / 0.12), 0 12px 24px -10px hsl(20 30% 10% / 0.08);
+        --shadow-xl: 0 40px 100px -20px hsl(20 30% 10% / 0.15);
+
         --radius: 1.5rem;
     }
 }
@@ -61,22 +67,19 @@
     html {
         scroll-behavior: smooth;
         scrollbar-width: none;
-        /* Firefox */
         -ms-overflow-style: none;
-        /* IE/Edge */
     }
 
     html::-webkit-scrollbar {
         display: none;
-        /* Chrome, Safari, Opera */
     }
 
     body {
         @apply bg-background text-foreground;
         font-family: 'Montserrat', sans-serif;
-        /* Proxy for Andes */
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
     }
 
     h1,
@@ -87,11 +90,22 @@
     h6 {
         font-family: 'Montserrat', sans-serif;
         font-weight: 800;
-        letter-spacing: -0.01em;
+        letter-spacing: -0.02em;
     }
 }
 
-/* Custom Scrollbar disabled */
+/* Premium Noise Texture */
+.noise-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3BaseFilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/baseFilter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
 
 /* Gradient Text using Brand Colors */
 .gradient-text {
@@ -105,15 +119,15 @@
 
 /* Orange glow effects */
 .orange-glow {
-    box-shadow: 0 0 40px rgba(249, 115, 22, 0.3), 0 0 80px rgba(249, 115, 22, 0.1);
+    box-shadow: 0 0 40px rgba(249, 115, 22, 0.2), 0 0 80px rgba(249, 115, 22, 0.05);
 }
 
 .orange-glow-sm {
-    box-shadow: 0 4px 20px rgba(249, 115, 22, 0.25);
+    box-shadow: 0 4px 20px rgba(249, 115, 22, 0.15);
 }
 
 .orange-glow-lg {
-    box-shadow: 0 0 60px rgba(249, 115, 22, 0.4), 0 0 120px rgba(249, 115, 22, 0.15);
+    box-shadow: 0 0 60px rgba(249, 115, 22, 0.3), 0 0 120px rgba(249, 115, 22, 0.1);
 }
 
 /* Shimmer animation */
@@ -134,7 +148,7 @@
 
 /* Section Padding */
 .section-padding {
-    @apply py-14 lg:py-20;
+    @apply py-16 lg:py-24;
 }
 
 /* Container */
@@ -166,18 +180,30 @@
     animation: gradient 6s ease infinite;
 }
 
-/* Glassmorphism */
+/* Enhanced Glassmorphism */
 .glass-header {
-    @apply bg-white/80 backdrop-blur-lg;
+    @apply bg-white/70 backdrop-blur-xl border-b border-white/20;
 }
 
 .glass-card {
-    @apply bg-white/40 backdrop-blur-xl border border-white/20;
+    @apply bg-white/40 backdrop-blur-2xl border border-white/30 shadow-md;
 }
 
-/* Shadows */
+.glass-card-dark {
+    @apply bg-black/40 backdrop-blur-2xl border border-white/10;
+}
+
+/* Premium Shadows */
 .shadow-premium {
-    box-shadow: 0 25px 80px -20px rgba(0, 0, 0, 0.08);
+    box-shadow: var(--shadow-lg);
+}
+
+.shadow-premium-hover {
+    @apply transition-shadow duration-500;
+}
+
+.shadow-premium-hover:hover {
+    box-shadow: var(--shadow-xl);
 }
 
 /* Layout Utilities */
@@ -191,7 +217,7 @@
 
 .nav-link::after {
     content: '';
-    @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300;
+    @apply absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all duration-300;
 }
 
 .nav-link:hover::after {
@@ -199,7 +225,7 @@
 }
 
 .nav-link:hover {
-    @apply text-primary;
+    @apply text-brand-orange;
 }
 
 @keyframes bounce-slow {
@@ -210,7 +236,7 @@
     }
 
     50% {
-        transform: translateY(-20px);
+        transform: translateY(-15px);
     }
 }
 
@@ -231,14 +257,33 @@
     }
 
     33% {
-        transform: translateY(-10px) rotate(2deg);
+        transform: translateY(-12px) rotate(1deg);
     }
 
     66% {
-        transform: translateY(5px) rotate(-1deg);
+        transform: translateY(6px) rotate(-0.5deg);
     }
 }
 
 .animate-float {
-    animation: float 6s ease-in-out infinite;
+    animation: float 8s ease-in-out infinite;
+}
+
+/* Liquid Gradient Animation */
+@keyframes liquid {
+    0% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%
+    }
+
+    50% {
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%
+    }
+
+    100% {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%
+    }
+}
+
+.animate-liquid {
+    animation: liquid 10s ease-in-out infinite;
 }

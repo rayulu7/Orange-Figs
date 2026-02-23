@@ -51,19 +51,21 @@ const FAQItem = ({ item, isOpen, onClick }) => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className={`rounded-[1.5rem] overflow-hidden transition-all duration-300 ${isOpen ? 'bg-orange-50 border border-orange-200/50' : 'bg-gray-50 border border-transparent hover:border-orange-100'
+            className={`rounded-[2rem] overflow-hidden transition-all duration-500 ${isOpen
+                ? 'bg-orange-50/50 border border-orange-200/50 shadow-premium'
+                : 'bg-white border border-gray-100 hover:border-orange-100 shadow-sm hover:shadow-md'
                 }`}
         >
             <button
                 onClick={onClick}
-                className="w-full flex items-center justify-between p-6 lg:p-7 text-left gap-4"
+                className="w-full flex items-center justify-between p-7 lg:p-8 text-left gap-4 group"
             >
-                <h3 className={`text-lg font-bold transition-colors ${isOpen ? 'text-orange-600' : 'text-gray-900'}`}>
+                <h3 className={`text-lg lg:text-xl font-black transition-colors duration-300 ${isOpen ? 'text-orange-600' : 'text-gray-900'}`}>
                     {item.question}
                 </h3>
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen ? 'bg-orange-500 text-white rotate-180' : 'bg-gray-200 text-gray-500'
+                <div className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-all duration-500 ${isOpen ? 'bg-orange-500 text-white rotate-180 shadow-lg shadow-orange-500/30' : 'bg-gray-100 text-gray-400 group-hover:bg-orange-50 group-hover:text-orange-400'
                     }`}>
-                    <ChevronDown size={20} strokeWidth={2.5} />
+                    <ChevronDown size={22} strokeWidth={2.5} />
                 </div>
             </button>
             <AnimatePresence>
@@ -92,7 +94,7 @@ export const FAQ = () => {
     const half = Math.ceil(faqData.length / 2);
 
     return (
-        <section className="py-14 lg:py-20 bg-white overflow-hidden relative">
+        <section className="py-14 lg:py-12 bg-white overflow-hidden relative">
             <div className="container-custom">
                 {/* Header */}
                 <div className="text-center max-w-2xl mx-auto mb-10 space-y-4">

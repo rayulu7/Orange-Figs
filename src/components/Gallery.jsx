@@ -1,61 +1,64 @@
-import React, { useState, useRef } from 'react';
-import { galleryImages } from '../data/mock';
-import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { ZoomIn } from 'lucide-react';
+import React, { useState, useRef } from "react";
+import { galleryImages } from "../data/mock";
+import {
+    motion,
+    AnimatePresence,
+    useMotionValue,
+    useSpring,
+} from "framer-motion";
+import { ZoomIn, X } from "lucide-react";
 
-const GalleryItem = ({ image, index }) => {
+const GalleryItem = ({ image, index, open }) => {
     const cardRef = useRef(null);
     const mouseX = useMotionValue(0);
     const mouseY = useMotionValue(0);
 
-    const springX = useSpring(mouseX, { stiffness: 100, damping: 30 });
-    const springY = useSpring(mouseY, { stiffness: 100, damping: 30 });
+    const springX = useSpring(mouseX, { stiffness: 120, damping: 20 });
+    const springY = useSpring(mouseY, { stiffness: 120, damping: 20 });
 
-    function handleMouseMove(e) {
+    const handleMouseMove = (e) => {
         if (!cardRef.current) return;
         const rect = cardRef.current.getBoundingClientRect();
         mouseX.set(e.clientX - rect.left);
         mouseY.set(e.clientY - rect.top);
-    }
+    };
 
-    const isLarge = index === 0 || index === 5 || index === 8;
+    const isLarge = index === 0 || index === 4;
 
     return (
         <motion.div
             ref={cardRef}
             onMouseMove={handleMouseMove}
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            onClick={() => open(image)}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{
-                delay: 0.1 * index,
-                duration: 0.6,
-                ease: [0.23, 1, 0.32, 1]
-            }}
-            className={`group relative rounded-[2.5rem] overflow-hidden bg-gray-100 cursor-pointer shadow-[0_15px_40px_rgba(0,0,0,0.05)] hover:shadow-[0_30px_60px_rgba(249,115,22,0.15)] transition-all duration-700 
-                ${isLarge ? 'md:col-span-2 md:row-span-2 aspect-[4/3]' : 'aspect-[1/1]'}`}
+            transition={{ delay: index * 0.07 }}
+            whileHover={{ y: -8 }}
+            className={`group relative cursor-pointer rounded-2xl overflow-hidden bg-gray-100 shadow-sm hover:shadow-[0_25px_60px_rgba(249,115,22,0.15)] transition-all duration-500
+      ${isLarge ? "md:col-span-2 md:row-span-2 aspect-[4/3]" : "aspect-square"}`}
         >
-            <img
+            <motion.img
                 src={image.url}
                 alt={image.title}
-                className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                className="w-full h-full object-cover"
+                whileHover={{ scale: 1.08 }}
+                transition={{ duration: 0.6 }}
             />
 
-            {/* Interactive Spotlight Effect */}
+            {/* Soft Spotlight */}
             <motion.div
-                className="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{
-                    background: `radial-gradient(600px circle at ${springX}px ${springY}px, rgba(249, 115, 22, 0.15), transparent 80%)`,
+                    background: `radial-gradient(400px circle at ${springX}px ${springY}px, rgba(249,115,22,0.18), transparent 70%)`,
                 }}
             />
 
-            {/* Content Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-orange-900/90 via-orange-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-8 z-20">
-                <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
-                    <h4 className="text-xl font-black text-white mb-2">{image.title}</h4>
-                    <div className="flex items-center gap-2 text-amber-300 font-bold text-[10px] uppercase tracking-widest">
-                        <ZoomIn size={14} /> View Moment
-                    </div>
+            {/* Minimal Hover Label */}
+            <div className="absolute bottom-4 left-4 text-white opacity-0 group-hover:opacity-100 transition duration-300">
+                <div className="flex items-center gap-2 text-xs uppercase tracking-widest font-semibold">
+                    <ZoomIn size={14} />
+                    View
                 </div>
             </div>
         </motion.div>
@@ -63,45 +66,81 @@ const GalleryItem = ({ image, index }) => {
 };
 
 export const Gallery = () => {
+    const [activeImage, setActiveImage] = useState(null);
+
     return (
-        <section id="gallery" className="py-14 lg:py-20 bg-white overflow-hidden">
+        <section id="gallery" className="pt-24 pb-0 bg-white border-t border-orange-100">
             <div className="container-custom">
-                {/* Section Header */}
-                <div className="text-center max-w-2xl mx-auto mb-16 space-y-4">
-                    <motion.span
-                        initial={{ opacity: 0, y: -10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-600 font-bold text-xs uppercase tracking-[0.2em]"
-                    >
+
+                {/* HEADER */}
+                <div className="text-center max-w-2xl mx-auto mb-16">
+                    <span className="inline-flex px-4 py-2 text-xs font-semibold uppercase tracking-widest text-orange-600 border border-orange-200 rounded-full">
                         Our Moments
-                    </motion.span>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="text-4xl lg:text-6xl font-black text-gray-900 leading-tight tracking-tight"
-                    >
-                        Capturing the <span className="gradient-text">Joy.</span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.3 }}
-                        className="text-base text-gray-500"
-                    >
-                        Success isn't just about the recipe; it's about the smiles, the focus, and the friendships formed.
-                    </motion.p>
+                    </span>
+
+                    <h2 className="mt-6 text-4xl lg:text-6xl font-black tracking-tight">
+                        Capturing the{" "}
+                        <span className="text-orange-500">Joy</span>
+                    </h2>
+
+                    <p className="mt-4 text-gray-500">
+                        It’s not just about recipes — it’s about smiles, focus, and friendships.
+                    </p>
                 </div>
 
-                {/* Premium Bento/Masonry Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-fr">
-                    {galleryImages.slice(0, 7).map((image, index) => (
-                        <GalleryItem key={image.id} image={image} index={index} />
+                {/* GRID */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 auto-rows-fr">
+                    {galleryImages.slice(0, 8).map((image, index) => (
+                        <GalleryItem
+                            key={image.id}
+                            image={image}
+                            index={index}
+                            open={setActiveImage}
+                        />
                     ))}
                 </div>
             </div>
+
+            {/* LIGHTBOX MODAL */}
+            <AnimatePresence>
+                {activeImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setActiveImage(null)}
+                        className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50 p-6"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ type: "spring", stiffness: 200 }}
+                            className="relative max-w-4xl w-full"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <button
+                                onClick={() => setActiveImage(null)}
+                                className="absolute -top-12 right-0 text-white hover:text-orange-400 transition"
+                            >
+                                <X size={28} />
+                            </button>
+
+                            <img
+                                src={activeImage.url}
+                                alt={activeImage.title}
+                                className="w-full rounded-2xl shadow-2xl"
+                            />
+
+                            <div className="mt-6 text-center text-white">
+                                <h4 className="text-xl font-semibold">
+                                    {activeImage.title}
+                                </h4>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </section>
     );
 };

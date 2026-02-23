@@ -3,23 +3,6 @@ import { Star, ArrowRight, Play, ChefHat, Sparkles } from 'lucide-react';
 import { Button } from './ui/button';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 
-const AnimatedCounter = ({ target, suffix = '' }) => {
-    const [count, setCount] = useState(0);
-    useEffect(() => {
-        let start = 0;
-        const end = parseInt(target);
-        const duration = 2000;
-        const increment = end / (duration / 16);
-        const timer = setInterval(() => {
-            start += increment;
-            if (start >= end) { setCount(end); clearInterval(timer); }
-            else setCount(Math.floor(start));
-        }, 16);
-        return () => clearInterval(timer);
-    }, [target]);
-    return <span>{count.toLocaleString()}{suffix}</span>;
-};
-
 const FloatingElement = ({ delay, duration, children, className }) => (
     <motion.div
         animate={{
@@ -59,10 +42,10 @@ export const Hero = () => {
     };
 
     return (
-        <motion.section style={{ opacity, scale }} className="relative min-h-[95vh] lg:min-h-screen flex items-center bg-[#FFFBF5] overflow-hidden">
+        <motion.section style={{ opacity, scale }} className="relative min-h-[95vh] lg:min-h-screen flex bg-[#FFFBF5] overflow-hidden">
             {/* Premium Background Layer */}
             <div className="absolute inset-0 z-0">
-                <div className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-orange-200/20 blur-[120px]" />
+                <div className="absolute top-[5%] right-[-5%] w-[600px] h-[600px] rounded-full bg-orange-200/20 blur-[120px]" />
                 <div className="absolute bottom-[-15%] left-[-8%] w-[500px] h-[500px] rounded-full bg-amber-200/15 blur-[100px]" />
 
                 {/* Floating Abstract Shapes */}
@@ -85,7 +68,7 @@ export const Hero = () => {
                 backgroundSize: '40px 40px'
             }} />
 
-            <div className="container-custom relative z-10 pt-32 pb-16">
+            <div className="container-custom relative z-10 pt-48 lg:pt-64 pb-16">
                 <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
                     {/* Left — Text */}
                     <div className="space-y-8">
@@ -136,7 +119,7 @@ export const Hero = () => {
 
                         <motion.div custom={3} variants={textReveal} initial="hidden" animate="visible" className="flex flex-wrap gap-5 items-center">
                             <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                                <Button onClick={() => scrollToSection('pricing')}
+                                <Button onClick={() => scrollToSection('contact')}
                                     className="h-16 px-10 rounded-2xl bg-gray-900 text-white font-bold text-base shadow-2xl shadow-gray-200 hover:bg-orange-600 hover:shadow-orange-200 transition-all border-0 flex items-center gap-3 group">
                                     Start Baking Today <ArrowRight className="group-hover:translate-x-1 transition-transform" size={20} />
                                 </Button>
@@ -179,46 +162,30 @@ export const Hero = () => {
                         style={{ y: springY }}
                         initial={{ opacity: 0, x: 100 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 1, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
+                        transition={{ duration: 1.2, delay: 0.2, ease: [0.23, 1, 0.32, 1] }}
                         className="relative"
                     >
-                        <div className="absolute inset-0 bg-orange-400/20 rounded-[3rem] blur-[80px] scale-105 z-0" />
-                        <div className="relative rounded-[3rem] overflow-hidden shadow-[0_50px_100px_rgba(249,115,22,0.2)] aspect-[4/5] z-10 border-8 border-white">
+                        {/* Interactive Background Glow */}
+                        <div className="absolute inset-[-10%] bg-orange-400/20 rounded-[4rem] blur-[100px] animate-pulse duration-[10s] z-0" />
+
+                        {/* Liquid Shape Background */}
+                        <div className="absolute -inset-4 bg-gradient-to-tr from-orange-100/40 via-amber-100/40 to-orange-50/40 blur-3xl animate-liquid z-0" />
+
+                        <motion.div
+                            animate={{
+                                y: [0, -20, 0],
+                                rotate: [0, 1, -1, 0]
+                            }}
+                            transition={{
+                                duration: 8,
+                                repeat: Infinity,
+                                ease: "easeInOut"
+                            }}
+                            className="relative rounded-[3.5rem] overflow-hidden shadow-xl z-10 border-[12px] border-white/80 backdrop-blur-sm aspect-[4/5]"
+                        >
                             <img src="https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80" alt="Kids cooking" className="w-full h-full object-cover scale-105" />
-                        </div>
-
-                        {/* Stats Floating */}
-                        <motion.div
-                            animate={{ y: [0, -15, 0] }}
-                            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                            className="absolute -left-10 top-1/4 bg-white p-5 rounded-[2rem] shadow-2xl z-20 border border-orange-50"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-2xl bg-orange-500 flex items-center justify-center text-white">
-                                    <ChefHat size={24} />
-                                </div>
-                                <div>
-                                    <div className="text-2xl font-black text-gray-900 leading-none mb-1"><AnimatedCounter target="50" suffix="+" /></div>
-                                    <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">Kits Created</div>
-                                </div>
-                            </div>
                         </motion.div>
 
-                        <motion.div
-                            animate={{ y: [0, 15, 0] }}
-                            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                            className="absolute -right-6 bottom-1/4 bg-gray-900 p-5 rounded-[2rem] shadow-2xl z-20"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="w-12 h-12 rounded-2xl bg-amber-400 flex items-center justify-center text-gray-900">
-                                    <Sparkles size={24} />
-                                </div>
-                                <div>
-                                    <div className="text-2xl font-black text-white leading-none mb-1"><AnimatedCounter target="99" suffix="%" /></div>
-                                    <div className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Joy Rate</div>
-                                </div>
-                            </div>
-                        </motion.div>
                     </motion.div>
                 </div>
             </div>

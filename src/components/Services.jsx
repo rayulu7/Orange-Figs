@@ -96,66 +96,75 @@ export const Services = () => {
                                 initial={{ opacity: 0, y: 30 }}
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
-                                transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
-                                className={`group relative rounded-[2rem] overflow-hidden border border-gray-100 bg-white hover:border-orange-200/60 transition-all duration-500 hover:shadow-[0_20px_60px_rgba(249,115,22,0.08)]`}
+                                transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                                className={`group relative rounded-[2.5rem] overflow-hidden border border-gray-100 bg-white shadow-premium shadow-premium-hover`}
                             >
                                 <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
                                     {/* Image side */}
-                                    <div className="relative lg:w-[45%] h-64 lg:h-auto overflow-hidden shrink-0">
+                                    <div className="relative lg:w-[45%] h-72 lg:h-auto overflow-hidden shrink-0">
                                         <img
                                             src={service.image}
                                             alt={service.title}
-                                            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-r from-black/10 to-transparent" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
                                         {/* Tag */}
                                         <div
-                                            className="absolute top-6 left-6 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-widest text-white shadow-lg backdrop-blur-sm"
-                                            style={{ backgroundColor: `${service.color}dd` }}
+                                            className="absolute top-8 left-8 px-5 py-2 rounded-full text-[12px] font-black uppercase tracking-widest text-white shadow-xl backdrop-blur-md border border-white/20"
+                                            style={{ backgroundColor: `${service.color}cc` }}
                                         >
                                             {service.tag}
                                         </div>
                                     </div>
 
                                     {/* Content side */}
-                                    <div className="lg:w-[55%] p-8 lg:p-12 flex flex-col justify-center">
-                                        <div className="space-y-5">
+                                    <div className="lg:w-[55%] p-10 lg:p-16 flex flex-col justify-center">
+                                        <div className="space-y-6">
                                             {/* Icon + Title */}
-                                            <div className="flex items-start gap-4">
-                                                <div
-                                                    className="w-12 h-12 rounded-xl flex items-center justify-center text-white shadow-md shrink-0"
-                                                    style={{ backgroundColor: service.color }}
+                                            <div className="flex items-start gap-5">
+                                                <motion.div
+                                                    whileHover={{ rotate: 10, scale: 1.1 }}
+                                                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg shrink-0 transition-transform duration-500"
+                                                    style={{
+                                                        backgroundColor: service.color,
+                                                        boxShadow: `0 10px 20px -5px ${service.color}44`
+                                                    }}
                                                 >
-                                                    <Icon size={22} strokeWidth={2.5} />
-                                                </div>
+                                                    <Icon size={26} strokeWidth={2.5} />
+                                                </motion.div>
                                                 <div>
-                                                    <h3 className="text-2xl lg:text-3xl font-black text-gray-900 tracking-tight leading-tight">
+                                                    <h3 className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight leading-tight">
                                                         {service.title}
                                                     </h3>
                                                 </div>
                                             </div>
 
-                                            <p className="text-gray-500 leading-relaxed text-[15px]">
+                                            <p className="text-gray-500 leading-relaxed text-base lg:text-lg">
                                                 {service.description}
                                             </p>
 
                                             {/* Features in 2-col grid */}
-                                            <div className="grid grid-cols-2 gap-2.5">
+                                            <div className="grid grid-cols-2 gap-4 pt-2">
                                                 {service.features.map((f, i) => (
-                                                    <div key={i} className="flex items-center gap-2">
-                                                        <Check size={14} strokeWidth={3} style={{ color: service.color }} />
-                                                        <span className="text-sm font-semibold text-gray-700">{f}</span>
+                                                    <div key={i} className="flex items-center gap-3">
+                                                        <div className="w-5 h-5 rounded-full flex items-center justify-center bg-gray-50 shadow-inner">
+                                                            <Check size={12} strokeWidth={4} style={{ color: service.color }} />
+                                                        </div>
+                                                        <span className="text-sm font-bold text-gray-700">{f}</span>
                                                     </div>
                                                 ))}
                                             </div>
 
                                             <button
                                                 onClick={scrollToContact}
-                                                className="inline-flex items-center gap-2 font-bold text-sm mt-2 group/btn transition-colors"
+                                                className="inline-flex items-center gap-3 font-black text-sm mt-4 group/btn transition-all duration-300 uppercase tracking-widest"
                                                 style={{ color: service.color }}
                                             >
-                                                Learn More & Enroll
-                                                <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                                                Explore Program
+                                                <span className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover/btn:bg-orange-50 transition-colors">
+                                                    <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
+                                                </span>
                                             </button>
                                         </div>
                                     </div>

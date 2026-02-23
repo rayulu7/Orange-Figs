@@ -64,40 +64,55 @@ export const HowItWorks = () => {
                     <div className="hidden lg:block absolute top-[60px] left-[60px] right-[60px] h-[2px] bg-gradient-to-r from-orange-200 via-orange-300 to-amber-200 z-0" />
                     <div className="lg:hidden absolute top-0 bottom-0 left-[30px] w-[2px] bg-gradient-to-b from-orange-200 via-orange-300 to-amber-200 z-0" />
 
-                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 lg:gap-6 relative z-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-12 lg:gap-8 relative z-10">
                         {steps.map((step, index) => {
                             const Icon = step.icon;
                             return (
                                 <motion.div
                                     key={step.id}
-                                    initial={{ opacity: 0, y: 30 }}
+                                    initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: 0.12 * index, duration: 0.5 }}
-                                    className="relative"
+                                    viewport={{ once: true, margin: "-100px" }}
+                                    transition={{ delay: 0.2 * index, duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
+                                    className="relative group"
                                 >
-                                    {/* Mobile: horizontal layout. Desktop: vertical layout */}
-                                    <div className="flex lg:flex-col items-start lg:items-center gap-5 lg:gap-4 lg:text-center">
-                                        {/* Circle */}
+                                    {/* Connectivity indicators for mobile */}
+                                    <div className="lg:hidden absolute -left-[30px] top-[30px] w-4 h-4 rounded-full bg-orange-200 blur-sm animate-pulse" />
+
+                                    <div className="flex lg:flex-col items-start lg:items-center gap-6 lg:gap-6 lg:text-center">
+                                        {/* Circle with animated glow */}
                                         <div className="relative shrink-0">
-                                            <div
-                                                className="w-[60px] h-[60px] rounded-full flex items-center justify-center bg-white border-[3px] shadow-md transition-all"
-                                                style={{ borderColor: step.color }}
+                                            <motion.div
+                                                whileHover={{ scale: 1.1, rotate: 5 }}
+                                                className="w-[72px] h-[72px] rounded-2xl flex items-center justify-center bg-white border-2 shadow-premium group-hover:shadow-lg transition-all duration-500 relative z-10"
+                                                style={{ borderColor: `${step.color}33` }}
                                             >
-                                                <Icon size={24} strokeWidth={2} style={{ color: step.color }} />
-                                            </div>
+                                                <Icon size={28} strokeWidth={2} style={{ color: step.color }} />
+                                            </motion.div>
+
+                                            {/* Step ID badge */}
                                             <div
-                                                className="absolute -top-1.5 -right-1.5 w-7 h-7 rounded-full flex items-center justify-center text-white text-[11px] font-black shadow-md"
+                                                className="absolute -top-2 -right-2 w-8 h-8 rounded-xl flex items-center justify-center text-white text-[12px] font-black shadow-lg z-20"
                                                 style={{ backgroundColor: step.color }}
                                             >
                                                 {step.id}
                                             </div>
+
+                                            {/* Background pulse effect */}
+                                            <div
+                                                className="absolute inset-0 rounded-2xl blur-xl opacity-0 group-hover:opacity-40 transition-opacity duration-500"
+                                                style={{ backgroundColor: step.color }}
+                                            />
                                         </div>
 
-                                        {/* Text */}
-                                        <div className="space-y-1.5">
-                                            <h3 className="text-lg font-black text-gray-900 tracking-tight">{step.title}</h3>
-                                            <p className="text-sm text-gray-500 leading-relaxed">{step.description}</p>
+                                        {/* Text Section */}
+                                        <div className="space-y-2 pt-1">
+                                            <h3 className="text-xl font-black text-gray-900 tracking-tight leading-tight group-hover:text-orange-600 transition-colors">
+                                                {step.title}
+                                            </h3>
+                                            <p className="text-[15px] text-gray-500 leading-relaxed font-medium">
+                                                {step.description}
+                                            </p>
                                         </div>
                                     </div>
                                 </motion.div>
