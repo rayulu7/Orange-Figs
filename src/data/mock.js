@@ -75,7 +75,7 @@ export const whyChooseUs = [
     {
         id: 1,
         title: 'Expert Instructors',
-        description: 'Guided by Michelin-experienced chefs who specialize in child development.',
+        description: 'Guided by Michelin experienced chefs who specialize in child development.',
         icon: 'UserCheck',
         color: '#FCAB52'
     },
