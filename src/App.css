@@ -1,7 +1,13 @@
-/* ========================================
-   PREMIUM ORANGE FIGS LANDING PAGE
-   DB Brand Design System
-   ======================================== */
+/* Global Andes Rounded Font Helpers (from src/fonts final) */
+.andes-bold {
+    font-family: 'AndesRounded', sans-serif;
+    font-weight: 700;
+}
+
+.andes-regular {
+    font-family: 'AndesRounded', sans-serif;
+    font-weight: 400;
+}
 
 /* Brand Colors */
 :root {
@@ -53,15 +59,46 @@ body {
     }
 }
 
-/* Section Padding */
+/* Section Padding — top like before, minimal bottom */
 .section-padding {
-    padding: 3.5rem 0;
+    padding-top: 3.5rem;
+    padding-bottom: 1.5rem;
 }
 
 @media (min-width: 1024px) {
     .section-padding {
-        padding: 5rem 0;
+        padding-top: 5rem;
+        padding-bottom: 2.5rem;
     }
+}
+
+/* ========================================
+   UNIFIED SECTION HEADINGS
+   ======================================== */
+
+.section-heading {
+    font-family: 'AndesRounded', system-ui, sans-serif;
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #1a2b43;
+}
+
+.section-label {
+    font-family: 'AndesRounded', system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #FF6B1A;
+}
+
+.section-heading .grad {
+    background: linear-gradient(135deg, #FF6B1A, #F43F8A);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 /* ========================================
@@ -1216,7 +1253,7 @@ body {
     line-height: 1;
     font-weight: 700;
     color: rgba(252, 171, 82, 0.1);
-    font-family: Georgia, serif;
+    font-family: 'AndesRounded', sans-serif;
 }
 
 /* ========================================
@@ -1350,4 +1387,135 @@ body {
     .enrollment-card {
         padding: 2rem;
     }
+}
+
+/* ========================================
+   HERO — VIDEO + TEXT  (clean, 1 font)
+   ======================================== */
+
+/* ── Outer section ── */
+.hero-main {
+    position: relative;
+    z-index: 0;
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    padding-top: 70px;
+    /* space for fixed white header */
+    background: #FFF7ED;
+    display: flex;
+    flex-direction: column;
+    font-family: 'AndesRounded', sans-serif;
+    box-sizing: border-box;
+}
+
+/* ── Video container ── */
+.hero-vid-wrap {
+    width: 100%;
+    flex: 0 0 90%;
+    /* takes 90% of the available height */
+    position: relative;
+    background: #111;
+    overflow: hidden;
+}
+
+.hero-vid {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* ── Text caption below video ── */
+.hero-caption {
+    width: 100%;
+    flex: 1;
+    /* fills remaining 15% */
+    background: #FFF7ED;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* vertically centre in its strip */
+    text-align: center;
+    padding: 0 2rem;
+    gap: 0.5rem;
+}
+
+/* Both lines — identical style (Andes Rounded from src/fonts final) */
+.hero-line {
+    font-family: 'AndesRounded', sans-serif;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+    font-weight: 500;
+    line-height: 1.7;
+    color: #78583A;
+    margin: 0;
+    max-width: 700px;
+}
+
+@media (max-width: 768px) {
+
+    /* Keep the same 85/15 flex layout on mobile — just let it fill the screen */
+    .hero-main {
+        height: 100svh;
+        /* use small viewport height on mobile */
+        min-height: 500px;
+    }
+
+    /* hero-vid-wrap keeps flex: 0 0 85% — no override needed */
+    /* hero-caption keeps flex: 1 (15%) — no override needed */
+
+    .hero-caption {
+        padding: 0 1rem;
+    }
+
+    .hero-line {
+        font-size: 0.82rem;
+    }
+}
+
+/* ── Our Programs grid ── */
+.programs-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 across on desktop */
+    gap: 1.25rem;
+}
+
+@media (max-width: 767px) {
+    .programs-grid {
+        grid-template-columns: repeat(2, 1fr);
+        /* 2×2 on mobile */
+        gap: 0.75rem;
+    }
+}
+
+
+/* ── Infinite Auto Scroll Marquee ── */
+@keyframes scrollMarquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.animate-scroll-marquee {
+    animation: scrollMarquee 35s linear infinite;
+    width: max-content;
+}
+
+/* Pause scroll on hover */
+.animate-scroll-marquee:hover {
+    animation-play-state: paused;
+}
+
+/* Swiper Continuous Autoplay */
+.continuous-swiper .swiper-wrapper {
+    transition-timing-function: linear !important;
 }

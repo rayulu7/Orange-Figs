@@ -1,179 +1,278 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, ChefHat, Cake, Utensils, Star, Check } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
 
 const services = [
-    {
-        id: 1,
-        icon: ChefHat,
-        tag: 'Ages 4–6',
-        title: 'Little Chefs Foundation',
-        description: 'A playful, hands-on introduction to the kitchen. Children discover the joy of cooking through simple, colorful recipes and fun food art that builds confidence from day one.',
-        features: ['Kitchen safety basics', 'Fruit & veggie art', 'Simple no-heat recipes', 'Sensory play activities'],
-        color: '#F97316',
-        image: 'https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80',
-    },
-    {
-        id: 2,
-        icon: Utensils,
-        tag: 'Ages 7–12',
-        title: 'Junior Culinary Arts',
-        description: 'Building real skills — from knife technique to sauce making. Kids tackle exciting recipes from around the world in a safe, guided environment with professional chefs.',
-        features: ['Knife & chopping skills', 'Sauce & flavour building', 'Baking fundamentals', 'World cuisine exploration'],
-        color: '#EA580C',
-        image: 'https://images.unsplash.com/photo-1514986888952-8cd320577b68?auto=format&fit=crop&q=80',
-    },
-    {
-        id: 3,
-        icon: Star,
-        tag: 'Ages 13–17',
-        title: 'Teen Masterclass',
-        description: 'Advanced culinary techniques for ambitious teens. Master plating, international cuisines, and pastry arts under expert chef mentorship in a collaborative studio setting.',
-        features: ['Pastry & dessert arts', 'International cuisines', 'Professional plating', 'Menu design & planning'],
-        color: '#D97706',
-        image: 'https://images.unsplash.com/photo-1481391243133-f96216dcb5d2?auto=format&fit=crop&q=80',
-    },
-    {
-        id: 4,
-        icon: Cake,
-        tag: 'All Ages',
-        title: 'Private & Family Sessions',
-        description: 'Book an exclusive session for your family or a group. Perfect for birthdays, special occasions, or a unique bonding experience everyone will love and remember.',
-        features: ['Flexible scheduling', 'Custom menu planning', 'Perfect for celebrations', 'Take-home recipe book'],
-        color: '#F59E0B',
-        image: 'https://images.unsplash.com/photo-1551218808-94e220e03107?auto=format&fit=crop&q=80',
-    },
+  {
+    id: 1,
+    badge: "BIRTHDAY CELEBRATIONS",
+    badgeColor: "#FA4A38",
+    title: "Birthday Celebrations",
+    desc: "Give your child a birthday celebration they'll remember for a lifetime. At Orange Figs, birthdays go beyond games and cake — they become immersive culinary experiences where kids cook, create, and celebrate together.",
+    bullets: ["Themed, chef-guided cooking experiences", "A unique, interactive celebration format", "Premium, Stress-Free Hosting", "Meaningful Fun"],
+    wave1: "#FA4A38", wave2: "#fc7a6c", wave3: "#fde0dd",
+    img: "/DSC05046.jpg",
+  },
+  {
+    id: 2,
+    badge: "WEEKEND KIDS CLUB",
+    badgeColor: "#B42A63",
+    title: "Kids Cooking Club",
+    desc: "A weekend cooking club where kids bond over global cuisines, build real skills, and make meaningful friendships. We encourage kids to experiment, make mistakes, learn techniques, and grow in confidence.",
+    bullets: ["Exploration of world cuisines", "Kitchen skills and techniques", "Foundational cooking methods", "Ingredient awareness and flavour pairing"],
+    wave1: "#B42A63", wave2: "#d4507f", wave3: "#f5d0e0",
+    img: "/DSC01483.jpg",
+  },
+  {
+    id: 3,
+    badge: "SUMMER CAMP",
+    badgeColor: "#3BC7D5",
+    title: "Orange Figs Summer Camp",
+    desc: "Where curious kids roll up their sleeves, try new flavours, experiment boldly, and discover what they're capable of in the kitchen. Hands-on, energetic, and designed to keep young minds engaged from day one.",
+    bullets: ["2 weeks of structured culinary training", "Learning at premium restaurants", "Explore the world through food", "Skill-building, discipline & creativity"],
+    wave1: "#3BC7D5", wave2: "#72d9e3", wave3: "#d4f4f7",
+    img: "/DSC01863.jpg",
+  },
+  {
+    id: 4,
+    badge: "DEEP-DIVE LEARNING",
+    badgeColor: "#366BC4",
+    title: "Chef-Led Masterclasses",
+    desc: "Focused, high-impact culinary experiences led by expert chefs and industry professionals. Children dive deep into a cuisine, technique, or theme — guided by world-class mentors who bring real industry knowledge.",
+    bullets: ["Master one cuisine at a time", "MasterChef-level professionals", "Professional kitchen standards", "Go beyond basics — explore the craft"],
+    wave1: "#366BC4", wave2: "#6a96d8", wave3: "#d6e4f7",
+    img: "/_VPC7540.JPG",
+  },
 ];
 
+function ServiceCard({ svc, index, isExpanded, onToggle, isMobile }) {
+  const truncatedDesc = svc.desc.substring(0, 60) + '...';
+
+  return (
+    <div style={{
+      position: "relative",
+      background: "#fff",
+      borderRadius: isMobile ? 16 : 24,
+      overflow: "hidden",
+      boxShadow: "0 6px 28px rgba(0,0,0,0.07)",
+      display: "flex",
+      flexDirection: "column",
+      opacity: 0,
+      animation: `fadeUp 0.6s ease ${index * 0.12}s forwards`,
+    }}>
+      {/* Image */}
+      <div style={{ position: "relative", height: isMobile ? 150 : 200, overflow: "hidden", flexShrink: 0 }}>
+        <img src={svc.img} alt={svc.title} loading="lazy" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.22) 100%)" }} />
+        <div style={{
+          position: "absolute", top: isMobile ? 8 : 12, left: isMobile ? 8 : 12,
+          background: svc.badgeColor, color: "#fff",
+          fontFamily: "'AndesRounded', sans-serif", fontSize: isMobile ? 7 : 10, fontWeight: 500,
+          letterSpacing: "0.12em", textTransform: "uppercase",
+          padding: isMobile ? "3px 6px" : "5px 12px", borderRadius: 999,
+        }}>
+          {svc.badge}
+        </div>
+      </div>
+
+      {/* Body */}
+      <div style={{
+        padding: isMobile
+          ? (isExpanded ? "12px 10px 120px" : "12px 10px 100px")
+          : "28px 28px 200px",
+        flex: 1,
+        position: "relative",
+        zIndex: 2
+      }}>
+        {/* Title */}
+        <h3 style={{
+          fontFamily: "'AndesRounded', sans-serif",
+          fontSize: isMobile ? 13 : 22, fontWeight: 500, color: "#1a1020",
+          letterSpacing: "-0.02em", lineHeight: 1.25, marginBottom: isMobile ? 6 : 12,
+        }}>
+          {svc.title}
+        </h3>
+
+        {/* Desc - truncated on mobile when collapsed */}
+        <p style={{
+          fontFamily: "'AndesRounded', sans-serif",
+          fontSize: isMobile ? 10 : 13.5, fontWeight: 500, color: "#7a7f99",
+          lineHeight: 1.6, marginBottom: isMobile ? 8 : 18,
+        }}>
+          {isMobile && !isExpanded ? truncatedDesc : svc.desc}
+        </p>
+
+        {/* Bullets - hidden on mobile when collapsed */}
+        {(!isMobile || isExpanded) && (
+          <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: isMobile ? 4 : 7 }}>
+            {svc.bullets.map((b, i) => (
+              <li key={i} style={{
+                display: "flex", alignItems: "flex-start", gap: 6,
+                fontFamily: "'AndesRounded', sans-serif",
+                fontSize: isMobile ? 9 : 13, fontWeight: 500, color: "#4a4f6a", lineHeight: 1.4,
+              }}>
+                <span style={{ width: isMobile ? 4 : 6, height: isMobile ? 4 : 6, borderRadius: "50%", background: svc.wave1, flexShrink: 0, marginTop: 4 }} />
+                {b}
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {/* View More/Less Button - only on mobile */}
+        {isMobile && (
+          <button
+            onClick={onToggle}
+            style={{
+              marginTop: 10,
+              background: "none",
+              border: "none",
+              padding: 0,
+              fontFamily: "'AndesRounded', sans-serif",
+              fontSize: 9,
+              fontWeight: 800,
+              color: svc.badgeColor,
+              cursor: "pointer",
+              textTransform: "uppercase",
+              letterSpacing: "0.08em",
+              display: "flex",
+              alignItems: "center",
+              gap: 3,
+            }}
+          >
+            {isExpanded ? "View Less" : "View More"}
+            <svg
+              width="10"
+              height="10"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke={svc.badgeColor}
+              strokeWidth="3"
+              style={{
+                transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)",
+                transition: "transform 0.3s ease"
+              }}
+            >
+              <path d="M6 9l6 6 6-6"/>
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Wave bottom */}
+      <div style={{
+        position: "absolute", bottom: 0, left: 0, right: 0,
+        height: isMobile ? "100px" : "220px", overflow: "hidden",
+        pointerEvents: "none", zIndex: 1,
+      }}>
+        <svg viewBox="0 0 400 80" preserveAspectRatio="none" style={{ width: "100%", height: "100%", display: "block" }}>
+          <path d="M0 30 Q50 10 100 25 Q150 40 200 20 Q250 0 300 18 Q350 36 400 15 L400 80 L0 80 Z" fill={svc.wave3}/>
+          <path d="M0 40 Q60 18 120 35 Q180 52 240 30 Q300 8 360 28 Q390 38 400 25 L400 80 L0 80 Z" fill={svc.wave2} opacity="0.7"/>
+          <path d="M0 52 Q70 30 140 48 Q210 66 280 44 Q340 24 400 45 L400 80 L0 80 Z" fill={svc.wave1} opacity="0.85"/>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 export const Services = () => {
-    const scrollToContact = () => {
-        document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-    };
+  const [expandedCards, setExpandedCards] = useState([]);
+  const [isMobile, setIsMobile] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-    return (
-        <section id="classes" className="bg-white py-14 lg:py-20">
-            <div className="container-custom">
+  useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
 
-                {/* Section Header */}
-                <div className="text-center max-w-2xl mx-auto mb-14 space-y-4">
-                    <motion.span
-                        initial={{ opacity: 0, y: -10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="inline-block text-xs font-black uppercase tracking-[0.2em] text-orange-600 bg-orange-50 border border-orange-200/50 px-4 py-2 rounded-full"
-                    >
-                        Our Programs
-                    </motion.span>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl lg:text-5xl font-black text-gray-900 leading-tight tracking-tight"
-                    >
-                        A Program for Every <span className="gradient-text">Young Chef</span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-base text-gray-500 leading-relaxed"
-                    >
-                        From toddler-friendly kitchen play to advanced teen masterclasses — we have a program designed for every age and skill level.
-                    </motion.p>
-                </div>
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-                {/* Alternating service cards */}
-                <div className="space-y-6">
-                    {services.map((service, index) => {
-                        const Icon = service.icon;
-                        const isReversed = index % 2 !== 0;
-
-                        return (
-                            <motion.div
-                                key={service.id}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.8, ease: [0.23, 1, 0.32, 1] }}
-                                className={`group relative rounded-[2.5rem] overflow-hidden border border-gray-100 bg-white shadow-premium shadow-premium-hover`}
-                            >
-                                <div className={`flex flex-col ${isReversed ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}>
-                                    {/* Image side */}
-                                    <div className="relative lg:w-[45%] h-72 lg:h-auto overflow-hidden shrink-0">
-                                        <img
-                                            src={service.image}
-                                            alt={service.title}
-                                            className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                        {/* Tag */}
-                                        <div
-                                            className="absolute top-8 left-8 px-5 py-2 rounded-full text-[12px] font-black uppercase tracking-widest text-white shadow-xl backdrop-blur-md border border-white/20"
-                                            style={{ backgroundColor: `${service.color}cc` }}
-                                        >
-                                            {service.tag}
-                                        </div>
-                                    </div>
-
-                                    {/* Content side */}
-                                    <div className="lg:w-[55%] p-10 lg:p-16 flex flex-col justify-center">
-                                        <div className="space-y-6">
-                                            {/* Icon + Title */}
-                                            <div className="flex items-start gap-5">
-                                                <motion.div
-                                                    whileHover={{ rotate: 10, scale: 1.1 }}
-                                                    className="w-14 h-14 rounded-2xl flex items-center justify-center text-white shadow-lg shrink-0 transition-transform duration-500"
-                                                    style={{
-                                                        backgroundColor: service.color,
-                                                        boxShadow: `0 10px 20px -5px ${service.color}44`
-                                                    }}
-                                                >
-                                                    <Icon size={26} strokeWidth={2.5} />
-                                                </motion.div>
-                                                <div>
-                                                    <h3 className="text-3xl lg:text-4xl font-black text-gray-900 tracking-tight leading-tight">
-                                                        {service.title}
-                                                    </h3>
-                                                </div>
-                                            </div>
-
-                                            <p className="text-gray-500 leading-relaxed text-base lg:text-lg">
-                                                {service.description}
-                                            </p>
-
-                                            {/* Features in 2-col grid */}
-                                            <div className="grid grid-cols-2 gap-4 pt-2">
-                                                {service.features.map((f, i) => (
-                                                    <div key={i} className="flex items-center gap-3">
-                                                        <div className="w-5 h-5 rounded-full flex items-center justify-center bg-gray-50 shadow-inner">
-                                                            <Check size={12} strokeWidth={4} style={{ color: service.color }} />
-                                                        </div>
-                                                        <span className="text-sm font-bold text-gray-700">{f}</span>
-                                                    </div>
-                                                ))}
-                                            </div>
-
-                                            <button
-                                                onClick={scrollToContact}
-                                                className="inline-flex items-center gap-3 font-black text-sm mt-4 group/btn transition-all duration-300 uppercase tracking-widest"
-                                                style={{ color: service.color }}
-                                            >
-                                                Explore Program
-                                                <span className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover/btn:bg-orange-50 transition-colors">
-                                                    <ArrowRight size={16} className="transition-transform duration-300 group-hover/btn:translate-x-1" />
-                                                </span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        );
-                    })}
-                </div>
-            </div>
-        </section>
+  const toggleCard = (id) => {
+    setExpandedCards(prev =>
+      prev.includes(id) ? prev.filter(cardId => cardId !== id) : [...prev, id]
     );
+  };
+
+  return (
+    <>
+      <style>{`
+        .section-heading { opacity: 0; transform: translateY(20px); transition: all 0.7s cubic-bezier(.22,1,.36,1) 0.1s; }
+        .section-heading.on { opacity: 1; transform: translateY(0); }
+        .section-label { opacity: 0; transform: translateY(12px); transition: all 0.6s ease 0.35s; }
+        .section-label.on { opacity: 1; transform: translateY(0); }
+        @keyframes fadeUp {
+          from { opacity: 0; transform: translateY(32px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .svc-root {
+          background: #fffaf6;
+          padding: 80px 40px 100px;
+        }
+        @media (max-width: 767px) {
+          .svc-root {
+            padding: 50px 16px 60px;
+          }
+        }
+        .svc-header { text-align: center; margin-bottom: 52px; }
+        @media (max-width: 767px) {
+          .svc-header { margin-bottom: 32px; }
+        }
+        .svc-header .section-label { margin-bottom: 14px; }
+        @media (max-width: 767px) {
+          .svc-label { font-size: 10px; margin-bottom: 10px; }
+        }
+        .svc-header .section-heading { margin-bottom: 16px; }
+        .svc-sub {
+          font-family: 'AndesRounded', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          color: #9196b3;
+          max-width: 560px;
+          margin: 0 auto;
+          line-height: 1.7;
+        }
+        @media (max-width: 767px) {
+          .svc-sub { font-size: 14px; padding: 0 8px; }
+        }
+        .svc-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+          gap: 24px;
+          max-width: 1160px;
+          margin: 0 auto;
+        }
+        @media (max-width: 767px) {
+          .svc-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 100%;
+          }
+        }
+        @media (max-width: 480px) {
+          .svc-grid {
+            grid-template-columns: 1fr;
+            gap: 16px;
+          }
+        }
+      `}</style>
+      <section id="classes" className="svc-root">
+        <div className="svc-header">
+          <p className={`section-label ${visible ? "on" : ""}`}>What We Offer</p>
+          <h2 className={`section-heading ${visible ? "on" : ""}`}>Our <span className="grad">Services</span></h2>
+          <p className="svc-sub" style={{ opacity: visible ? 1 : 0, transition: "opacity 0.6s ease 0.5s" }}>Culinary experiences for every young chef — from birthdays and weekend clubs to summer camps and masterclasses.</p>
+        </div>
+        <div className="svc-grid">
+          {services.map((svc, i) => (
+            <ServiceCard
+              key={svc.id}
+              svc={svc}
+              index={i}
+              isExpanded={expandedCards.includes(svc.id)}
+              onToggle={() => toggleCard(svc.id)}
+              isMobile={isMobile}
+            />
+          ))}
+        </div>
+      </section>
+    </>
+  );
 };

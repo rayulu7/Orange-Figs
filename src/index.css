@@ -1,8 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Andes Rounded W01 Medium - Licensed font (use for all weights) */
+@font-face {
+    font-family: 'AndesRounded';
+    src: url('./fonts/Andes Rounded W01 Medium.ttf') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Utility class to apply Andes Rounded font */
+.font-andes-rounded {
+    font-family: 'AndesRounded', system-ui, sans-serif;
+}
 
 @layer base {
     :root {
@@ -66,6 +78,8 @@
 
     html {
         scroll-behavior: smooth;
+        scroll-padding-top: 100px;
+        /* Offset for the fixed header */
         scrollbar-width: none;
         -ms-overflow-style: none;
     }
@@ -76,7 +90,8 @@
 
     body {
         @apply bg-background text-foreground;
-        font-family: 'Montserrat', sans-serif;
+        font-family: 'AndesRounded', sans-serif !important;
+        font-weight: 600;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         overflow-x: hidden;
@@ -88,9 +103,14 @@
     h4,
     h5,
     h6 {
-        font-family: 'Montserrat', sans-serif;
-        font-weight: 800;
+        font-family: 'AndesRounded', sans-serif !important;
+        font-weight: 700;
         letter-spacing: -0.02em;
+    }
+
+    p, span, div, a, button, input, textarea, label, li {
+        font-family: 'AndesRounded', sans-serif;
+        font-weight: 600;
     }
 }
 
@@ -146,9 +166,9 @@
     animation: shimmer 3s linear infinite;
 }
 
-/* Section Padding */
+/* Section Padding — top like before, minimal bottom */
 .section-padding {
-    @apply py-16 lg:py-24;
+    @apply pt-14 lg:pt-24 pb-6 lg:pb-10;
 }
 
 /* Container */

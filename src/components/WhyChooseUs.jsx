@@ -1,208 +1,245 @@
-import React, { useEffect, useRef } from "react";
-import { motion, useMotionValue, useTransform, animate, useInView } from "framer-motion";
-import {
-    UserCheck,
-    ShieldCheck,
-    HeartPulse,
-    Award,
-    Star,
-    ArrowUpRight,
-} from "lucide-react";
+import React, { useState, useEffect } from "react";
 
-const AnimatedCounter = ({ value, suffix }) => {
-    const count = useMotionValue(0);
-    const rounded = useTransform(count, (latest) => {
-        if (value % 1 !== 0) {
-            return latest.toFixed(1);
-        }
-        return Math.round(latest).toLocaleString();
-    });
-    const ref = useRef(null);
-    const inView = useInView(ref, { once: true });
-
-    useEffect(() => {
-        if (inView) {
-            const controls = animate(count, value, { duration: 2, ease: "easeOut" });
-            return controls.stop;
-        }
-    }, [inView, value, count]);
-
-    return (
-        <span ref={ref}>
-            <motion.span>{rounded}</motion.span>
-            {suffix}
-        </span>
-    );
+// Same palette as Services section
+const colors = {
+  coral: { main: "#FA4A38", light: "#fde0dd", dark: "#D93D2E" },
+  magenta: { main: "#B42A63", light: "#f5d0e0", dark: "#8F2250" },
+  teal: { main: "#3BC7D5", light: "#d4f4f7", dark: "#2BA5B0" },
+  blue: { main: "#366BC4", light: "#d6e4f7", dark: "#2954A0" },
 };
 
-const reasons = [
-    {
-        id: 1,
-        icon: UserCheck,
-        number: "01",
-        title: "Expert Instructors",
-        description:
-            "Guided by Michelin-experienced chefs who specialise in child development. Certified, passionate, and dedicated to every young chef.",
-        image:
-            "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&q=80",
-    },
-    {
-        id: 2,
-        icon: ShieldCheck,
-        number: "02",
-        title: "Safety First",
-        description:
-            "State-of-the-art kitchen with induction heating, age-appropriate tools, and strict hygiene standards.",
-    },
-    {
-        id: 3,
-        icon: HeartPulse,
-        number: "03",
-        title: "Healthy Habits",
-        description:
-            "We cultivate a love for fresh, whole ingredients and lifelong nutritional literacy.",
-    },
-    {
-        id: 4,
-        icon: Award,
-        number: "04",
-        title: "Award-Winning Curriculum",
-        description:
-            "Recognised nationally for blending creativity, nutrition, and technique.",
-    },
-];
+// ── ICONS ──────────────────────────────────────────────────────────────
 
-const stats = [
-    { value: 1200, suffix: "+", label: "Students" },
-    { value: 15, suffix: "+", label: "Chefs" },
-    { value: 4.9, suffix: " / 5", label: "Rating" },
-    { value: 50, suffix: "+", label: "Workshops" },
-    { value: 6, suffix: " yrs", label: "Excellence" },
-];
+const ExpertIcon = ({ color }) => (
+  <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" width="54" height="54">
+    <circle cx="27" cy="21" r="13" fill={color.light} stroke={color.main} strokeWidth="2"/>
+    <circle cx="27" cy="21" r="9.5" fill="white" stroke={color.main} strokeWidth="1.5"/>
+    <path d="M21 23.5L27 17L33 23.5V30H30V25H24V30H21V23.5Z" fill={color.main}/>
+    <path d="M18 33L21 41L27 37L33 41L36 33L27 37.5Z" fill={color.light} stroke={color.main} strokeWidth="1"/>
+    <circle cx="19.5" cy="21" r="1.5" fill={color.main}/>
+    <circle cx="34.5" cy="21" r="1.5" fill={color.main}/>
+  </svg>
+);
+
+const AwardIcon = ({ color }) => (
+  <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" width="54" height="54">
+    <path d="M7 24L27 7L47 24V46H34V32H20V46H7V24Z" fill={color.light} stroke={color.main} strokeWidth="1.5" strokeLinejoin="round"/>
+    <rect x="20" y="32" width="14" height="14" fill="white" stroke={color.main} strokeWidth="1"/>
+    <circle cx="39" cy="40" r="9" fill={color.light} stroke={color.main} strokeWidth="1.5"/>
+    <path d="M36 40L38 42L42 38" stroke={color.main} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const SafetyIcon = ({ color }) => (
+  <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" width="54" height="54">
+    <rect x="9" y="8" width="25" height="31" rx="2" fill={color.light} stroke={color.main} strokeWidth="1.5"/>
+    <rect x="17" y="5" width="9" height="6" rx="1.5" fill="white" stroke={color.main} strokeWidth="1"/>
+    <rect x="14" y="18" width="13" height="2" rx="1" fill={color.main}/>
+    <rect x="14" y="24" width="9" height="2" rx="1" fill={color.main}/>
+    <rect x="14" y="30" width="11" height="2" rx="1" fill={color.main}/>
+    <circle cx="38" cy="40" r="10" fill={color.light} stroke={color.main} strokeWidth="2"/>
+    <path d="M33 40L36 43L43 36" stroke={color.main} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const FamilyIcon = ({ color }) => (
+  <svg viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg" width="54" height="54">
+    <circle cx="12" cy="19" r="5.5" fill={color.light} stroke={color.main} strokeWidth="1.5"/>
+    <path d="M4 40C4 32 7.5 28 12 28" stroke={color.main} strokeWidth="2" strokeLinecap="round" fill="none"/>
+    <circle cx="42" cy="19" r="5.5" fill={color.light} stroke={color.main} strokeWidth="1.5"/>
+    <path d="M50 40C50 32 46.5 28 42 28" stroke={color.main} strokeWidth="2" strokeLinecap="round" fill="none"/>
+    <circle cx="27" cy="17" r="7" fill="white" stroke={color.main} strokeWidth="2"/>
+    <path d="M15 42C15 33 19.5 28 27 28C34.5 28 39 33 39 42" stroke={color.main} strokeWidth="2.5" strokeLinecap="round" fill="none"/>
+    <path d="M27 5L28.8 10.5H34.5L30 13.8L31.8 19.3L27 16.2L22.2 19.3L24 13.8L19.5 10.5H25.2L27 5Z" fill={color.main}/>
+  </svg>
+);
+
+// ── FEATURE ITEM ───────────────────────────────────────────────────────────
+
+const FeatureItem = ({ icon, title, description, color, isFirst = false }) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "48px 1fr",
+      gap: 12,
+      alignItems: "start",
+      padding: "20px 0",
+      borderTop: isFirst ? "none" : "1px solid #f0e6dc",
+    }}
+  >
+    <div
+      style={{
+        width: 48,
+        height: 48,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        flexShrink: 0,
+        background: color.light,
+        borderRadius: 12,
+        border: `2px solid ${color.main}20`,
+      }}
+    >
+      <div style={{ transform: "scale(0.7)" }}>{icon}</div>
+    </div>
+    <div>
+      <h3
+        style={{
+          fontFamily: "'AndesRounded', system-ui, sans-serif",
+          fontSize: "clamp(14px, 2vw, 18px)",
+          fontWeight: 700,
+          color: color.dark,
+          marginBottom: 6,
+          lineHeight: 1.2,
+        }}
+      >
+        {title}
+      </h3>
+      <p style={{ fontSize: "clamp(11px, 1.5vw, 14px)", color: "#666", lineHeight: 1.5 }}>
+        {description}
+      </p>
+    </div>
+  </div>
+);
+
+// ── CTA LINK ───────────────────────────────────────────────────────────────
+
+const CtaLink = ({ href = "#", children, color }) => {
+  const [hovered, setHovered] = React.useState(false);
+  return (
+    <a
+      href={href}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        gap: hovered ? 9 : 5,
+        fontSize: "clamp(12px, 1.5vw, 15px)",
+        fontWeight: 700,
+        color: color,
+        textDecoration: "none",
+        transition: "gap 0.2s ease",
+      }}
+    >
+      {children}
+    </a>
+  );
+};
+
+// ── MAIN COMPONENT ─────────────────────────────────────────────────────────
+
+const whyStyles = `
+  .section-heading { opacity: 0; transform: translateY(20px); transition: all 0.7s cubic-bezier(.22,1,.36,1) 0.1s; }
+  .section-heading.on { opacity: 1; transform: translateY(0); }
+  .section-label { opacity: 0; transform: translateY(12px); transition: all 0.6s ease 0.35s; }
+  .section-label.on { opacity: 1; transform: translateY(0); }
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; align-items: stretch; }
+  .why-left { display: block; }
+  .why-right { border-left: 2px solid #f0e6dc; }
+  @media (max-width: 900px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .why-left { grid-template-columns: 1fr; }
+    .why-features { padding-top: 24px !important; }
+    .why-right { border-left: none; border-top: 2px solid #f0e6dc; padding-top: 24px !important; padding-left: 0 !important; }
+  }
+  @media (max-width: 768px) {
+    .why-wrap { padding: 24px 16px !important; }
+  }
+`;
 
 export const WhyChooseUs = () => {
-    return (
-        <section id="why" className="bg-white pt-12 pb-0 border-t border-orange-100">
-            <div className="container-custom">
-
-                {/* HEADER */}
-                <div className="flex flex-col lg:flex-row justify-between gap-10 mb-20">
-                    <div className="space-y-5">
-                        <span className="inline-flex items-center text-xs font-semibold uppercase tracking-widest text-orange-600 border border-orange-200 px-4 py-2 rounded-full">
-                            Why Choose Us
-                        </span>
-
-                        <h2 className="text-5xl lg:text-6xl font-black tracking-tight leading-tight">
-                            The Orange Figs{" "}
-                            <span className="text-orange-500">Difference</span>
-                        </h2>
-                    </div>
-
-                    <p className="text-gray-500 max-w-md font-semibold text-lg leading-relaxed">
-                        We don’t just teach cooking — we build confidence,
-                        creativity, and habits that last a lifetime.
-                        And we do it all with a dash of fun and a sprinkle of magic!
-                        Our secret ingredient? Passion. We believe that cooking is an art form, a science, and a way of life.
-                        We’re here to share that passion with the next generation of culinary artists.
-                    </p>
-                </div>
-
-                {/* GRID */}
-                <div className="grid lg:grid-cols-12 gap-6">
-
-                    {/* FEATURE CARD */}
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8 }}
-                        className="lg:col-span-5 rounded-3xl overflow-hidden relative group min-h-[480px]"
-                    >
-                        <img
-                            src={reasons[0].image}
-                            alt=""
-                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        />
-
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-
-                        <div className="absolute inset-0 p-10 flex flex-col justify-between text-white">
-                            <div className="flex justify-between items-center">
-                                <span className="text-7xl font-black text-white/10">
-                                    01
-                                </span>
-                                <div className="w-14 h-14 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg">
-                                    <UserCheck size={26} />
-                                </div>
-                            </div>
-
-                            <div className="space-y-4">
-                                <div className="flex gap-1">
-                                    {[...Array(5)].map((_, i) => (
-                                        <Star key={i} size={14} className="fill-amber-400 text-amber-400" />
-                                    ))}
-                                </div>
-
-                                <h3 className="text-3xl font-bold">
-                                    {reasons[0].title}
-                                </h3>
-
-                                <p className="text-white/80 text-sm leading-relaxed">
-                                    {reasons[0].description}
-                                </p>
-
-                                <div className="inline-flex items-center gap-2 text-orange-400 text-sm font-semibold uppercase tracking-wide">
-                                    Meet The Team <ArrowUpRight size={18} />
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
-
-                    {/* OTHER CARDS */}
-                    <div className="lg:col-span-7 grid gap-6">
-                        {reasons.slice(1).map((reason, index) => {
-                            const Icon = reason.icon;
-                            return (
-                                <motion.div
-                                    key={reason.id}
-                                    initial={{ opacity: 0, y: 30 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true }}
-                                    transition={{ delay: index * 0.1 }}
-                                    className="bg-white border border-gray-100 rounded-2xl p-8 flex gap-6 items-start hover:border-orange-200 transition-all"
-                                >
-                                    <div className="w-14 h-14 bg-orange-50 text-orange-600 rounded-xl flex items-center justify-center">
-                                        <Icon size={26} />
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <h3 className="text-xl font-bold text-gray-900">
-                                            {reason.title}
-                                        </h3>
-                                        <p className="text-gray-500 text-sm leading-relaxed max-w-lg">
-                                            {reason.description}
-                                        </p>
-                                    </div>
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-                </div>
-
-                {/* STATS */}
-                <div className="mt-16 grid grid-cols-2 md:grid-cols-5 gap-6 border-t border-orange-100 pt-12">
-                    {stats.map((stat, i) => (
-                        <div key={i} className="text-center">
-                            <div className="text-3xl font-black text-orange-600">
-                                <AnimatedCounter value={stat.value} suffix={stat.suffix} />
-                            </div>
-                            <div className="text-xs uppercase tracking-widest text-gray-400 mt-2">
-                                {stat.label}
-                            </div>
-                        </div>
-                    ))}
-                </div>
+  const [visible, setVisible] = useState(false);
+  useEffect(() => { setTimeout(() => setVisible(true), 100); }, []);
+  return (
+    <>
+      <style>{whyStyles}</style>
+      <section
+        id="why"
+        style={{
+          background: "#fffaf6",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "'AndesRounded', sans-serif",
+          color: "#1a1a1a",
+        }}
+      >
+        <div
+          className="why-wrap"
+          style={{
+            maxWidth: 1140,
+            width: "100%",
+            padding: "clamp(30px, 5vw, 50px) clamp(16px, 4vw, 48px)",
+          }}
+        >
+          {/* Centered heading block — top center */}
+          <div style={{ textAlign: "center", marginBottom: "clamp(32px, 5vw, 48px)", maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
+            <h2 className={`section-heading ${visible ? "on" : ""}`} style={{ marginBottom: "16px" }}>
+              The Orange Figs <span className="grad">Difference</span>
+            </h2>
+            <p className={`section-label ${visible ? "on" : ""}`} style={{ marginBottom: "clamp(16px, 2vw, 24px)" }}>
+              Why Orange Figs?
+            </p>
+            <p
+              style={{
+                fontSize: "clamp(14px, 1.5vw, 16px)",
+                color: "#555",
+                lineHeight: 1.65,
+                marginBottom: "clamp(20px, 3vw, 28px)",
+              }}
+            >
+              At Orange Figs, we craft meaningful culinary experiences rooted in creativity and culture. Every gathering is thoughtfully designed with warmth, precision, and attention to detail. We honour each milestone — from celebrations to first discoveries in the kitchen. Most importantly, we create safe, joyful spaces where children feel confident to explore, learn, and grow.
+            </p>
+            <div style={{ display: "flex", gap: "clamp(12px, 2vw, 20px)", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
+              <CtaLink href="#contact" color={colors.teal.main}>Contact Us ›</CtaLink>
             </div>
-        </section>
-    );
+          </div>
+
+          <div className="why-grid">
+
+          {/* ── LEFT BLOCK ── */}
+          <div className="why-left">
+            {/* Features */}
+            <div className="why-features" style={{ paddingRight: "clamp(12px, 3vw, 32px)", paddingLeft: "clamp(12px, 3vw, 40px)" }}>
+              <FeatureItem
+                isFirst
+                icon={<ExpertIcon color={colors.coral} />}
+                title="Curated, Not Casual"
+                description="Our programs are thoughtfully structured — not drop-in activities, but intentional culinary journeys designed with progression and purpose."
+                color={colors.coral}
+              />
+              <FeatureItem
+                icon={<AwardIcon color={colors.magenta} />}
+                title="Culture Beyond Recipes"
+                description="We go beyond cooking instructions. Children explore the stories, traditions, and global influences behind every dish."
+                color={colors.magenta}
+              />
+            </div>
+          </div>
+
+          {/* ── RIGHT COL ── */}
+          <div className="why-right" style={{ paddingLeft: "clamp(12px, 3vw, 32px)", paddingBottom: 20, paddingTop: "clamp(20px, 4vw, 40px)" }}>
+              <FeatureItem
+                isFirst
+                icon={<SafetyIcon color={colors.teal} />}
+                title="Professional Standards, Child-Centred Approach"
+                description="Led by experienced chefs, our sessions balance real kitchen discipline with a nurturing, age-appropriate environment."
+                color={colors.teal}
+              />
+              <FeatureItem
+                icon={<FamilyIcon color={colors.blue} />}
+                title="Growth You Can See"
+                description="Children leave with more than a finished dish — they gain confidence, independence, collaboration skills, and a deeper relationship with food."
+                color={colors.blue}
+              />
+          </div>
+
+          </div>
+        </div>
+    </section>
+    </>
+  );
 };
+
+export default WhyChooseUs;

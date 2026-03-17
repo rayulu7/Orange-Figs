@@ -1,49 +1,60 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, HelpCircle } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const faqData = [
     {
         id: 1,
-        question: 'What age groups are your kits designed for?',
-        answer: 'Our kits cater to children aged 4–17. We have three tiers: Little Chefs (4–6), Junior Culinary Arts (7–12), and Teen Masterclass (13–17). Each tier is thoughtfully designed with age-appropriate recipes, tools, and skill levels.',
+        question: 'What age group is Orange Figs suitable for?',
+        answer: 'Our programmes are designed for children aged 6 to 16 years, with sessions tailored to different age groups and skill levels.',
     },
     {
         id: 2,
-        question: 'What comes in each monthly box?',
-        answer: 'Every box includes pre-measured dry ingredients, step-by-step illustrated recipe cards, a fun kitchen tool or accessory, educational cooking facts, and access to our online video tutorial for that month\'s recipe.',
+        question: 'Do children need prior cooking experience?',
+        answer: 'Not at all. We welcome beginners and experienced young cooks alike. Our curriculum adapts to each child\'s learning stage.',
     },
     {
         id: 3,
-        question: 'Are the recipes allergy-friendly?',
-        answer: 'We offer nut-free, gluten-free, and dairy-free alternatives for most of our recipes. During sign-up, you can specify any allergies or dietary restrictions, and we\'ll tailor your kit accordingly.',
+        question: 'Is safety ensured in the kitchen?',
+        answer: 'Absolutely. All sessions are supervised by trained chefs. We maintain strict safety, hygiene and equipment guidelines appropriate for children.',
     },
     {
         id: 4,
-        question: 'Can I cancel or pause my subscription?',
-        answer: 'Absolutely! You can pause or cancel your subscription at any time from your account dashboard. Monthly subscribers can cancel before the next billing date. Prepaid plans are non-refundable but can be paused.',
+        question: 'What is the batch size?',
+        answer: 'We keep batches small to ensure individual attention, structured learning and a premium experience.',
     },
     {
         id: 5,
-        question: 'Do you ship internationally?',
-        answer: 'Currently, we ship within the United States, Canada, and the United Kingdom. We\'re expanding to more countries soon! Sign up for our newsletter to stay updated on new shipping destinations.',
+        question: 'What does a typical session include?',
+        answer: 'Hands-on cooking, ingredient awareness, technique-building, plating, tasting and reflection — along with teamwork and discipline.',
     },
     {
         id: 6,
-        question: 'Is adult supervision required?',
-        answer: 'For Little Chefs (ages 4–6), adult supervision is required throughout. For Junior Culinary Arts (7–12), we recommend adult supervision especially when using the oven or stove. Teen Masterclass participants can work more independently.',
+        question: 'Are ingredients and equipment provided?',
+        answer: 'Yes. All ingredients, tools and chef aprons are provided by us.',
     },
     {
         id: 7,
-        question: 'Can I gift a subscription?',
-        answer: 'Yes! Gift subscriptions are one of our most popular options. You can purchase 1, 3, 6, or 12-month gift plans. We\'ll include a personalized gift card and can ship directly to the recipient.',
+        question: 'Do you accommodate dietary restrictions?',
+        answer: 'Yes. Please inform us in advance about allergies or dietary preferences, and we will do our best to accommodate them.',
     },
     {
         id: 8,
-        question: 'What makes Orange Figs different from other cooking kits?',
-        answer: 'Orange Figs was developed by Michelin-experienced chefs and child development experts. Our curriculum focuses not just on cooking, but on building confidence, nutritional literacy, and creativity. Plus, every kit includes premium, ethically-sourced ingredients.',
+        question: 'How is Summer Camp different from the Cooking Club?',
+        answer: 'Summer Camp is an intensive, structured multi-day experience with restaurant exposure. The Cooking Club is a weekend-based, ongoing skill-building programme.',
+    },
+    {
+        id: 9,
+        question: 'Can parents stay during sessions?',
+        answer: 'We encourage independent learning. However, parents are invited for showcase days and special events.',
+    },
+    {
+        id: 10,
+        question: 'How do I register?',
+        answer: 'You can register through the website form or contact us directly via phone or WhatsApp.',
     },
 ];
+
 
 const FAQItem = ({ item, isOpen, onClick }) => {
     return (
@@ -91,40 +102,32 @@ const FAQItem = ({ item, isOpen, onClick }) => {
 
 export const FAQ = () => {
     const [openId, setOpenId] = useState(1);
+    const [visible, setVisible] = useState(false);
     const half = Math.ceil(faqData.length / 2);
 
+    useEffect(() => {
+        setTimeout(() => setVisible(true), 100);
+    }, []);
+
     return (
-        <section className="py-14 lg:py-12 bg-white overflow-hidden relative">
+        <section className="pt-14 lg:pt-12 pb-8 lg:pb-10 bg-white overflow-hidden relative">
+            <style>{`
+                .section-heading { opacity: 0; transform: translateY(20px); transition: all 0.7s cubic-bezier(.22,1,.36,1) 0.1s; margin-bottom: 16px; }
+                .section-heading.on { opacity: 1; transform: translateY(0); }
+                .section-label { opacity: 0; transform: translateY(12px); transition: all 0.6s ease 0.35s; }
+                .section-label.on { opacity: 1; transform: translateY(0); }
+            `}</style>
+
             <div className="container-custom">
                 {/* Header */}
-                <div className="text-center max-w-2xl mx-auto mb-10 space-y-4">
-                    <motion.span
-                        initial={{ opacity: 0, y: -10 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-orange-200 bg-orange-50 text-orange-600 font-bold text-xs uppercase tracking-[0.2em]"
-                    >
-                        <HelpCircle size={14} />
-                        FAQ
-                    </motion.span>
-                    <motion.h2
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.1 }}
-                        className="text-4xl lg:text-5xl font-black text-gray-900 tracking-tight"
-                    >
-                        Got <span className="gradient-text">Questions?</span>
-                    </motion.h2>
-                    <motion.p
-                        initial={{ opacity: 0 }}
-                        whileInView={{ opacity: 1 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: 0.2 }}
-                        className="text-lg text-gray-500 leading-relaxed"
-                    >
+                <div className="text-center max-w-2xl mx-auto mb-6">
+                    <h2 className={`section-heading ${visible ? "on" : ""}`}>
+                        Got <span className="grad">Questions?</span>
+                    </h2>
+                    <p className={`section-label ${visible ? "on" : ""}`}>Frequently Asked Questions</p>
+                    <p className="text-lg text-gray-500 leading-relaxed mt-4" style={{ opacity: visible ? 1 : 0, transition: 'opacity 0.6s ease 0.5s' }}>
                         Everything you need to know about Orange Figs. Can't find your answer? <a href="#contact" className="text-orange-500 font-bold underline underline-offset-2">Contact us</a>.
-                    </motion.p>
+                    </p>
                 </div>
 
                 {/* Two Column FAQ */}

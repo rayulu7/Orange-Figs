@@ -4,13 +4,12 @@ import {
     Phone,
     MapPin,
     Instagram,
-    Facebook,
     Youtube,
-    Twitter,
+    Linkedin,
 } from "lucide-react";
 import { contactInfo } from "../data/mock";
 import { motion } from "framer-motion";
-import logo from "../assets/logo.jpg";
+import logo from "../assets/oflogo.png";
 
 export const Footer = () => {
 
@@ -41,10 +40,9 @@ export const Footer = () => {
     ];
 
     const socialLinks = [
-        { icon: Instagram, href: "https://instagram.com/orangefigs" },
-        { icon: Facebook, href: "https://facebook.com/orangefigs" },
-        { icon: Youtube, href: "https://youtube.com/orangefigs" },
-        { icon: Twitter, href: "https://twitter.com/orangefigs" },
+        { icon: Instagram, href: "https://www.instagram.com/orangefigsofficial/?hl=en", label: "Instagram" },
+        { icon: Youtube, href: "https://www.youtube.com/@orangefigsofficial8345/featured", label: "YouTube" },
+        { icon: Linkedin, href: "https://www.linkedin.com/company/orange-figs/posts/?feedView=all", label: "LinkedIn" },
     ];
 
     return (
@@ -58,17 +56,7 @@ export const Footer = () => {
                     {/* Brand */}
                     <div className="lg:col-span-5 space-y-5">
                         <div className="flex items-center gap-4">
-                            <div className="w-20 h-20 bg-orange-50/50 rounded-2xl flex items-center justify-center border border-orange-100/50">
-                                <img src={logo} alt="Logo" className="w-14 h-14 object-contain" />
-                            </div>
-                            <div>
-                                <div className="text-xl font-black tracking-tight text-gray-900 leading-none">
-                                    <span className="gradient-text">ORANGE FIGS</span>
-                                </div>
-                                <div className="text-[10px] font-bold text-orange-500/80 uppercase tracking-[0.3em] mt-1 ml-0.5">
-                                    Culinary School
-                                </div>
-                            </div>
+                            <img src={logo} alt="Orange Figs" loading="lazy" className="w-24 h-24 object-contain" />
                         </div>
 
                         <p className="text-gray-500 text-sm leading-relaxed max-w-sm font-medium">
@@ -84,6 +72,9 @@ export const Footer = () => {
                                 <motion.a
                                     key={i}
                                     href={social.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={social.label}
                                     whileHover={{ y: -3, scale: 1.05 }}
                                     whileTap={{ scale: 0.95 }}
                                     className="w-9 h-9 rounded-lg border border-orange-100 bg-white shadow-sm flex items-center justify-center text-gray-600 hover:bg-orange-500 hover:text-white hover:border-orange-500 transition-all duration-300"
@@ -95,7 +86,7 @@ export const Footer = () => {
                     </div>
 
                     {/* Links */}
-                    <div className="lg:col-span-4 grid grid-cols-2 gap-8">
+                    <div className="lg:col-span-4 grid grid-cols-2 gap-6 sm:gap-8">
                         {footerLinks.map((group, i) => (
                             <div key={i} className="space-y-5">
                                 <h4 className="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em]">
@@ -124,26 +115,37 @@ export const Footer = () => {
                         </h4>
 
                         <div className="space-y-4 text-sm text-gray-600 font-medium">
-                            <div className="flex items-start gap-3 group">
-                                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                            <a
+                                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(contactInfo.address)}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-start gap-3 group cursor-pointer hover:text-orange-500 transition-colors"
+                            >
+                                <span className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
                                     <MapPin size={14} />
-                                </div>
+                                </span>
                                 <span className="pt-1">{contactInfo.address}</span>
-                            </div>
+                            </a>
 
-                            <div className="flex items-center gap-3 group">
-                                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                            <a
+                                href={`tel:${contactInfo.phone.replace(/\s/g, "")}`}
+                                className="flex items-center gap-3 group cursor-pointer hover:text-orange-500 transition-colors"
+                            >
+                                <span className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
                                     <Phone size={14} />
-                                </div>
+                                </span>
                                 <span>{contactInfo.phone}</span>
-                            </div>
+                            </a>
 
-                            <div className="flex items-center gap-3 group">
-                                <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
+                            <a
+                                href={`mailto:${contactInfo.email}`}
+                                className="flex items-center gap-3 group cursor-pointer hover:text-orange-500 transition-colors"
+                            >
+                                <span className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center text-orange-500 shrink-0 group-hover:bg-orange-500 group-hover:text-white transition-colors">
                                     <Mail size={14} />
-                                </div>
+                                </span>
                                 <span>{contactInfo.email}</span>
-                            </div>
+                            </a>
                         </div>
                     </div>
                 </div>
