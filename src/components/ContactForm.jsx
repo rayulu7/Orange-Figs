@@ -22,8 +22,7 @@ const CONTACT_SERVICES = [
 
 const PRIMARY_EMAIL = "go9346089096@gmail.com";
 const CC_EMAILS =
-    "dasaradharam109@gmail.com"
-
+    "Chakradhar@theculinarylounge.com,gopi@theculinarylounge.com,hello@theculinarylounge.com";
 export const ContactForm = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
