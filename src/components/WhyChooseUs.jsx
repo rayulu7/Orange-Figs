@@ -163,6 +163,7 @@ export const WhyChooseUs = () => {
           justifyContent: "center",
           fontFamily: "'AndesRounded', sans-serif",
           color: "#1a1a1a",
+          paddingTop: 0,
         }}
       >
         <div
@@ -170,28 +171,32 @@ export const WhyChooseUs = () => {
           style={{
             maxWidth: 1140,
             width: "100%",
-            padding: "clamp(30px, 5vw, 50px) clamp(16px, 4vw, 48px)",
+            paddingTop: 0,
+            paddingBottom: "clamp(30px, 5vw, 50px)",
+            paddingLeft: "clamp(16px, 4vw, 48px)",
+            paddingRight: "clamp(16px, 4vw, 48px)",
           }}
         >
           {/* Centered heading block — top center */}
-          <div style={{ textAlign: "center", marginBottom: "clamp(32px, 5vw, 48px)", maxWidth: 640, marginLeft: "auto", marginRight: "auto" }}>
-            <h2 className={`section-heading ${visible ? "on" : ""}`} style={{ marginBottom: "16px" }}>
+          <div style={{ marginBottom: "clamp(32px, 5vw, 48px)", maxWidth: 720, marginLeft: "auto", marginRight: "auto" }}>
+            <h2 className={`section-heading ${visible ? "on" : ""}`} style={{ marginTop: 0, marginBottom: "16px", textAlign: "center" }}>
               The Orange Figs <span className="grad">Difference</span>
             </h2>
-            <p className={`section-label ${visible ? "on" : ""}`} style={{ marginBottom: "clamp(16px, 2vw, 24px)" }}>
+            <p className={`section-label ${visible ? "on" : ""}`} style={{ marginBottom: "clamp(16px, 2vw, 24px)", textAlign: "center" }}>
               Why Orange Figs?
             </p>
             <p
               style={{
-                fontSize: "clamp(14px, 1.5vw, 16px)",
+                fontSize: "clamp(15px, 1.5vw, 17px)",
                 color: "#555",
-                lineHeight: 1.65,
-                marginBottom: "clamp(20px, 3vw, 28px)",
+                lineHeight: 1.7,
+                marginBottom: "clamp(24px, 3vw, 32px)",
+                textAlign: "justify",
               }}
             >
               At Orange Figs, we craft meaningful culinary experiences rooted in creativity and culture. Every gathering is thoughtfully designed with warmth, precision, and attention to detail. We honour each milestone — from celebrations to first discoveries in the kitchen. Most importantly, we create safe, joyful spaces where children feel confident to explore, learn, and grow.
             </p>
-            <div style={{ display: "flex", gap: "clamp(12px, 2vw, 20px)", alignItems: "center", justifyContent: "center", flexWrap: "wrap" }}>
+            <div style={{ display: "flex", gap: "clamp(12px, 2vw, 20px)", alignItems: "center", justifyContent: "center", flexWrap: "wrap", marginTop: "24px" }}>
               <CtaLink href="#contact" color={colors.teal.main}>Contact Us ›</CtaLink>
             </div>
           </div>
@@ -201,7 +206,7 @@ export const WhyChooseUs = () => {
           {/* ── LEFT BLOCK ── */}
           <div className="why-left">
             {/* Features */}
-            <div className="why-features" style={{ paddingRight: "clamp(12px, 3vw, 32px)", paddingLeft: "clamp(12px, 3vw, 40px)" }}>
+            <div className="why-features" style={{ paddingRight: "clamp(16px, 4vw, 40px)" }}>
               <FeatureItem
                 isFirst
                 icon={<ExpertIcon color={colors.coral} />}
@@ -219,7 +224,7 @@ export const WhyChooseUs = () => {
           </div>
 
           {/* ── RIGHT COL ── */}
-          <div className="why-right" style={{ paddingLeft: "clamp(12px, 3vw, 32px)", paddingBottom: 20, paddingTop: "clamp(20px, 4vw, 40px)" }}>
+          <div className="why-right" style={{ paddingLeft: "clamp(16px, 4vw, 40px)" }}>
               <FeatureItem
                 isFirst
                 icon={<SafetyIcon color={colors.teal} />}

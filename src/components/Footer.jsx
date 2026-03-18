@@ -17,22 +17,21 @@ export const Footer = () => {
 
     const footerLinks = [
         {
-            title: "School",
+            title: "Services",
             links: [
-                { name: "Our Classes", href: "#classes" },
+                { name: "Birthday Celebrations", href: "#services" },
+                { name: "Kids Cooking Club", href: "#services" },
+                { name: "Summer Camp", href: "#services" },
+                { name: "Masterclasses", href: "#services" },
                 { name: "Why Us", href: "#why" },
-                { name: "Little Chefs (4-6)", href: "#classes" },
-                { name: "Junior Culinary (7-12)", href: "#classes" },
-                { name: "Teen Masterclass", href: "#classes" },
             ],
         },
         {
             title: "Community",
             links: [
-                { name: "Parents Portal", href: "#" },
                 { name: "Gallery", href: "#gallery" },
-                { name: "School Events", href: "#events" },
-                { name: "Gift Cards", href: "#" },
+                { name: "Stories", href: "#testimonials" },
+                { name: "Contact Us", href: "#contact" },
                 { name: "Kids Safety", href: "#why" },
                 { name: "Healthy Habits", href: "#why" },
             ],
