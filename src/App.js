@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Toaster } from 'sonner';
 import OrangeFigsLoader from './components/OrangeFigsLoader';
@@ -18,6 +18,8 @@ import { Partnerships } from './components/Partnerships';
 import { SocialVideos } from './components/SocialVideos';
 import { FAQ } from './components/FAQ';
 import { ScrollToTop } from './components/ScrollToTop';
+import { PrivacyPolicy } from './components/PrivacyPolicy';
+import { TermsOfService } from './components/TermsOfService';
 
 function App() {
     const { scrollYProgress } = useScroll();
@@ -26,6 +28,25 @@ function App() {
         damping: 30,
         restDelta: 0.001
     });
+
+    const [currentHash, setCurrentHash] = useState(window.location.hash);
+
+    useEffect(() => {
+        const handleHashChange = () => {
+            setCurrentHash(window.location.hash);
+        };
+        window.addEventListener('hashchange', handleHashChange);
+        return () => window.removeEventListener('hashchange', handleHashChange);
+    }, []);
+
+    // Render static pages if hash matches
+    if (currentHash === '#privacy-policy') {
+        return <PrivacyPolicy />;
+    }
+
+    if (currentHash === '#terms') {
+        return <TermsOfService />;
+    }
 
     return (
         <div className="App selection:bg-orange-100 selection:text-orange-600">
