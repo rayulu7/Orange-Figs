@@ -13,7 +13,7 @@ import { cloudinaryOpt } from '../data/mock';
 
 // Email recipients for registration popup
 const PRIMARY_EMAIL = "go9346089096@gmail.com";
-const CC_EMAILS = "Chakradhar@theculinarylounge.com,gopi@theculinarylounge.com,hello@theculinarylounge.com";
+const CC_EMAILS = "dasaradharam109@gmail.com";
 
 export const RegistrationPopup = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -147,8 +147,8 @@ export const RegistrationPopup = () => {
                                 value={formData.email}
                                 onChange={handleChange}
                             />
-                            <Button 
-                                type="submit" 
+                            <Button
+                                type="submit"
                                 disabled={isSubmitting}
                                 className="w-full h-14 rounded-full bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white font-black text-xl shadow-xl shadow-orange-500/30 transition-all active:scale-95 disabled:opacity-70"
                             >
