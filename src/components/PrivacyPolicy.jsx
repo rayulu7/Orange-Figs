@@ -9,7 +9,7 @@ export const PrivacyPolicy = () => {
     return (
         <div className="min-h-screen bg-[#fffaf6] py-12 px-4 font-sans text-[#1C0A08]">
             <div className="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-orange-100">
-                <a href="#" className="inline-flex items-center gap-2 text-orange-600 font-bold mb-8 hover:text-orange-700 transition-colors">
+                <a href="#home" className="inline-flex items-center gap-2 text-orange-600 font-bold mb-8 hover:text-orange-700 transition-colors">
                     <ArrowLeft size={20} />
                     Back to Home
                 </a>
