@@ -13,7 +13,7 @@ import { cloudinaryOpt } from '../data/mock';
 
 // Email recipients for registration popup
 const PRIMARY_EMAIL = "go9346089096@gmail.com";
-const CC_EMAILS = "Chakradhar@theculinarylounge.com,gopi@theculinarylounge.com,hello@theculinarylounge.com";
+const CC_EMAILS = "Chakradhar@theculinarylounge.com";
 
 export const RegistrationPopup = () => {
     const [isOpen, setIsOpen] = useState(false);
