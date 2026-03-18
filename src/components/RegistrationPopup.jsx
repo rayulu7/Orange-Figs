@@ -57,7 +57,6 @@ export const RegistrationPopup = () => {
                 headers: {
                     "Content-Type": "application/json",
                     Accept: "application/json",
-                    "Cache-Control": "no-cache",
                 },
                 body: JSON.stringify({
                     _subject: `New Registration from ${formData.name} - Orange Figs`,

@@ -65,7 +65,6 @@ export const ContactForm = () => {
                     headers: {
                         "Content-Type": "application/json",
                         Accept: "application/json",
-                        "Cache-Control": "no-cache",
                     },
                     body: JSON.stringify({
                         _subject: `New Inquiry from ${formData.parentName} - Orange Figs`,
