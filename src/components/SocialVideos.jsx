@@ -4,15 +4,15 @@ import { Instagram, ChevronLeft, ChevronRight } from 'lucide-react';
 
 // Video cards only (Instagram row removed)
 const socialVideos = [
-    { id: 1, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772275027/IMG_0809_nnzfxc.mp4' },
-    { id: 2, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772274826/IMG_0807_ocqxex.mp4' },
-    { id: 3, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772274875/IMG_0837_wgrarx.mp4' },
-    { id: 4, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772274915/IMG_0838_jx1d2h.mp4' },
-    { id: 5, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772274997/IMG_0836_rcnagd.mp4' },
-    { id: 6, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772275005/IMG_0824_h2kxy8.mp4' },
-    { id: 7, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772275018/IMG_0823_ti3s2l.mp4' },
-    { id: 8, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772274787/IMG_0839_pjgvj2.mp4' },
-    { id: 9, src: 'https://res.cloudinary.com/dg5qkp09h/video/upload/v1772275040/IMG_0808_ricrtt.mp4' },
+    { id: 1, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617647/IMG_0809_qbi6mu.mp4' },
+    { id: 2, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617686/IMG_0807_tb2ym5.mp4' },
+    { id: 3, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617761/IMG_0837_cbg0fg.mp4' },
+    { id: 4, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617808/IMG_0838_nkzkwa.mp4' },
+    { id: 5, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617845/IMG_0836_bubvrg.mp4' },
+    { id: 6, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617876/IMG_0824_gyi2ph.mp4' },
+    { id: 7, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617916/IMG_0823_rdyag1.mp4' },
+    { id: 8, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617946/IMG_0839_esxzfr.mp4' },
+    { id: 9, src: 'https://res.cloudinary.com/dehcbkqsf/video/upload/v1774617982/IMG_0808_lymlqz.mp4' },
 ];
 
 const VideoCard = ({ video, index }) => {
@@ -44,15 +44,15 @@ const VideoCard = ({ video, index }) => {
         >
             {/* Lazy-load video only when in view */}
             {isInView && (
-            <video
-                src={video.src}
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                className="w-full h-full object-cover"
-            />
+                <video
+                    src={video.src}
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                    preload="metadata"
+                    className="w-full h-full object-cover"
+                />
             )}
 
             {/* Premium top fade */}
